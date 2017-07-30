@@ -1,0 +1,35 @@
+html {
+  min-height: 100%;
+  height:100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  min-height: 100%;
+  height:100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  position: absolute;
+}
+
+#follower {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #0000ff;
+}
+
+.dot {
+  width: 2px;
+  height: 2px;
+  background-color: #0000ff;
+  position: absolute;
+  transition-timing-function: ease-in;
+}
