@@ -18,6 +18,9 @@ function DotView() {
         .duration(250)
         .ease(d3.easeLinear);
     }
+    this.onOpacity = 1;
+    this.offOpacity = .1;
+    this.lineOpacity = .5;
   }
 
   this.create_dots = function(){
@@ -37,12 +40,14 @@ function DotView() {
         .attr('cy', y)
         .classed('star', true);
       star.transition(this.fadeIn)
-        .style('opacity', .3);
+        .style('opacity', this.offOpacity);
       this.dots.push({
         'star': star,
         'x': x,
         'y':y,
-        'opacity': .3
+        'opacity': this.offOpacity,
+        'lined': false,
+        'targeted': []
       });
     }
     for(var i = 0; i<this.dots.length; i++){
@@ -56,7 +61,7 @@ function DotView() {
       var coord = this.pick_dot(dot.x, dot.y, 100);
       dot.x2 = coord.x;
       dot.y2 = coord.y;
-      if(coord.star) dot.target = coord.star;
+      if(coord.star) dot.target = coord;
       this.lines.push(dot.line);
     }
   }
@@ -77,26 +82,50 @@ function DotView() {
     for(var i = 0; i<mrchan.storage.dots.length; i++){
       var dot = mrchan.storage.dots[i];
       if(Math.pow(dot.x-coords[0],2)+Math.pow(dot.y-coords[1],2)<5000){
-        if(dot.opacity===.3){
-          dot.opacity=1;
+        if(dot.opacity===this.offOpacity){
+          dot.opacity=this.onOpacity;
           dot.star.transition(this.blinkIn())
-            .style('opacity', 1)
+            .style('opacity', this.onOpacity)
             .style('r', 2);
+        }
+        if(!dot.lined){
+          dot.lined = true;
           dot.line.transition(this.blinkIn())
             .attr('x2', dot.x2)
             .attr('y2', dot.y2)
-            .style('opacity', .5);
+            .style('opacity', this.lineOpacity);
+          if(dot.target){
+            dot.target.targeted.push(dot);
+            if(dot.target.opacity===this.offOpacity){
+              dot.target.opacity=this.onOpacity;
+              dot.target.star.transition(this.blinkIn())
+                .style('opacity', this.onOpacity)
+                .style('r', 2);
+            }
+          }
         }
       }else{
-        if(dot.opacity===1){
-          dot.opacity=.3;
+        if(dot.opacity===this.onOpacity && dot.targeted.length==0){
+          dot.opacity=this.offOpacity;
           dot.star.transition(this.blinkIn())
-            .style('opacity', .3)
+            .style('opacity', this.offOpacity)
             .style('r', 1);
+        }
+        if(dot.lined){
+          dot.lined = false;
           dot.line.transition(this.blinkIn())
             .attr('x2', dot.x)
             .attr('y2', dot.y)
             .style('opacity', 0);
+          if(dot.target){
+            dot.target.targeted.splice(dot.target.targeted.indexOf(dot), 1);
+            if(!dot.target.lined && dot.target.targeted.length==0){
+              dot.target.opacity=this.offOpacity;
+              dot.target.star.transition(this.blinkIn())
+                .style('opacity', this.offOpacity)
+                .style('r', 2);
+            }
+          }
         }
       }
     }
