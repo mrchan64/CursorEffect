@@ -45,3 +45,8 @@ body {
   pointer-events: visible;
   r: 30;
 }
+
+.constellation {
+  stroke: #dddddd;
+  opacity: 0;
+}
