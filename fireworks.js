@@ -1,4 +1,8 @@
-storage = {'body': $('body'), 'colorDeg': 0};
+d3.namespace = "http://www.w3.org/2000/svg";
+
+mrchan = {};
+mrchan.storage = {'$body': $('body'), 'd3body': d3.select('body')};
+mrchan.viewStore = {};
 
 var pickRandomDir = function(){
   return Math.floor(Math.random()*360);
@@ -30,5 +34,5 @@ var moveDiv = function(event){
   storage.y = event.pageY;
 }
 
-storage.body.mousemove(moveDiv)
-setInterval(createThing, 20);
+//storage.body.mousemove(moveDiv)
+//setInterval(createThing, 20);
