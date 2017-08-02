@@ -18,9 +18,15 @@ function DotView() {
         .duration(250)
         .ease(d3.easeLinear);
     }
-    this.onOpacity = 1;
+    this.slowBlink = function() {
+      return d3.transition()
+        .duration(1500)
+        .ease(d3.easeLinear);
+    }
+    this.onOpacity = .7;
+    this.medOpacity = .5;
     this.offOpacity = .1;
-    this.lineOpacity = .5;
+    this.lineOpacity = .4;
   }
 
   this.create_dots = function(){
@@ -64,6 +70,7 @@ function DotView() {
       if(coord.star) dot.target = coord;
       this.lines.push(dot.line);
     }
+    this.blinkage();
   }
 
   this.pick_dot = function(x,y,range){
@@ -82,7 +89,7 @@ function DotView() {
     for(var i = 0; i<mrchan.storage.dots.length; i++){
       var dot = mrchan.storage.dots[i];
       if(Math.pow(dot.x-coords[0],2)+Math.pow(dot.y-coords[1],2)<5000){
-        if(dot.opacity===this.offOpacity){
+        if(dot.opacity!==this.onOpacity){
           dot.opacity=this.onOpacity;
           dot.star.transition(this.blinkIn())
             .style('opacity', this.onOpacity)
@@ -96,7 +103,7 @@ function DotView() {
             .style('opacity', this.lineOpacity);
           if(dot.target){
             dot.target.targeted.push(dot);
-            if(dot.target.opacity===this.offOpacity){
+            if(dot.target.opacity!==this.onOpacity){
               dot.target.opacity=this.onOpacity;
               dot.target.star.transition(this.blinkIn())
                 .style('opacity', this.onOpacity)
@@ -123,12 +130,31 @@ function DotView() {
               dot.target.opacity=this.offOpacity;
               dot.target.star.transition(this.blinkIn())
                 .style('opacity', this.offOpacity)
-                .style('r', 2);
+                .style('r', 1);
             }
           }
         }
       }
     }
+  }
+
+  this.blinkage = function(){
+    var target = this.dots[Math.floor(Math.random()*this.dots.length)];
+    if(target.opacity===this.offOpacity){
+      target.opacity=this.medOpacity;
+      target.star.transition(this.slowBlink())
+        .style('opacity', this.medOpacity)
+        .style('r', 2);
+      setTimeout(function(){
+        if(target.opacity!==this.offOpacity && !target.lined && target.targeted.length===0){
+          target.opacity = this.offOpacity;
+          target.star.transition(this.slowBlink())
+            .style('opacity', this.offOpacity)
+            .style('r', 1);
+        }
+      }.bind(this), 2000);
+    }
+    setTimeout(this.blinkage.bind(this), Math.floor(Math.random()*500)+500);
   }
 }
 
