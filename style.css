@@ -18,6 +18,10 @@ body {
   background-color: #222222;
 }
 
+#plane {
+  position: absolute;
+}
+
 #follower {
   position: absolute;
   height: 100px;
@@ -49,4 +53,18 @@ body {
 .constellation {
   stroke: #dddddd;
   opacity: 0;
+}
+
+#name-capsule {
+  margin: 0 auto;
+  pointer-events: none;
+}
+
+#name-slide-box {
+  font-family: "Century Gothic";
+  position: relative;
+  float: center;
+  color: #dddddd;
+  opacity: 0;
+  text-align: center;
 }

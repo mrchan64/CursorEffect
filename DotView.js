@@ -29,6 +29,10 @@ function DotView() {
     this.lineOpacity = .4;
   }
 
+  this.scale = function(){
+    
+  }
+
   this.create_dots = function(){
     var plane = this.plane;
     var porps = this.porps;
@@ -85,6 +89,7 @@ function DotView() {
   }
 
   this.movement = function(el,hi,me){
+    if(mrchan.config.lowspec)return;
     var coords = d3.mouse(me[hi]);
     for(var i = 0; i<mrchan.storage.dots.length; i++){
       var dot = mrchan.storage.dots[i];
@@ -159,6 +164,6 @@ function DotView() {
 }
 
 mrchan.viewStore.DotView = DotView;
-var dots = mrchan.dots = new mrchan.viewStore.DotView;
+var dots = mrchan.dots = new mrchan.viewStore.DotView();
 dots.init();
 dots.create_dots();

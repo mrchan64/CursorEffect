@@ -3,6 +3,11 @@ d3.namespace = "http://www.w3.org/2000/svg";
 mrchan = {};
 mrchan.storage = {'$body': $('body'), 'd3body': d3.select('body')};
 mrchan.viewStore = {};
+mrchan.config = {};
+mrchan.config.lowspec = false;
+mrchan.config.namePlate = {}
+mrchan.config.namePlate.minWidth = 250;
+mrchan.config.namePlate.minHeight = 50;
 
 var pickRandomDir = function(){
   return Math.floor(Math.random()*360);
