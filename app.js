@@ -5,9 +5,20 @@ mrchan.storage = {'$body': $('body'), 'd3body': d3.select('body')};
 mrchan.viewStore = {};
 mrchan.config = {};
 mrchan.config.lowspec = false;
-mrchan.config.namePlate = {}
+mrchan.config.stars = {};
+mrchan.config.stars.density = .03;
+mrchan.config.stars.onOpacity = .7;
+mrchan.config.stars.medOpacity = .5;
+mrchan.config.stars.offOpacity = .2;
+mrchan.config.stars.lineOpacity = .4;
+mrchan.config.namePlate = {};
 mrchan.config.namePlate.minWidth = 250;
 mrchan.config.namePlate.minHeight = 50;
+
+mrchan.transitions = {};
+mrchan.transitions.fadeIn = d3.transition()
+  .duration(1000)
+  .ease(d3.easeSin);
 
 var pickRandomDir = function(){
   return Math.floor(Math.random()*360);

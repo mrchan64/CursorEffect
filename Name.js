@@ -1,7 +1,6 @@
 function NamePlate() {
 
   this.init = function() {
-    console.log('started')
     var body = this.body = mrchan.storage.d3body;
     var minWidth = this.minWidth = mrchan.config.namePlate.minWidth;
     var minHeight = this.minHeight = mrchan.config.namePlate.minHeight;
@@ -11,15 +10,12 @@ function NamePlate() {
       .attr('id', 'name-slide-box');
       //.on(hover)
     this.scale();
-    this.fadeIn = function() {
-      return d3.transition()
-        .duration(1000)
-        .ease(d3.easeSin);
-    }
     var startMarg = namePlate.node().getBoundingClientRect().height-slideBox.node().getBoundingClientRect().height;
     slideBox.style('top', startMarg+'px');
     slideBox.html('Matthew Chan');
-    slideBox.transition(this.fadeIn())
+    slideBox.transition()
+      .duration(1500)
+      .ease(d3.easeSin)
       .style('opacity', 1)
       .style('top', '0px');
 
@@ -35,7 +31,7 @@ function NamePlate() {
       .style('margin-top', height+'px');
     this.slideBox
       .style('width', width+'px')
-      .style('height', height*.8+'px')
+      .style('height', height*.925+'px')
       .style('font-size', height*.8*.8+'px');
   }
 
@@ -43,4 +39,4 @@ function NamePlate() {
 
 mrchan.viewStore.NamePlate = NamePlate;
 var namePlate = mrchan.namePlate = new mrchan.viewStore.NamePlate();
-setTimeout(namePlate.init.bind(namePlate), 500)
+setTimeout(namePlate.init.bind(namePlate), 1000)

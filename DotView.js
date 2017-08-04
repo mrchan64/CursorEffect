@@ -4,15 +4,13 @@ function DotView() {
     var body = this.body = mrchan.storage.d3body;
     this.dots = mrchan.storage.dots = [];
     this.lines = mrchan.storage.lines = [];
-    this.density = .03;
+    var options = this.options = mrchan.config.stars;
+    this.density = options.density;
     var porps = this.porps = body.node().getBoundingClientRect();
     this.plane = body.append('svg')
       .attr('width', porps.width)
       .attr('height', porps.height)
       .attr('id', 'plane');
-    this.fadeIn = d3.transition()
-      .duration(1000)
-      .ease(d3.easeLinear);
     this.blinkIn = function() {
       return d3.transition()
         .duration(250)
@@ -23,10 +21,10 @@ function DotView() {
         .duration(1500)
         .ease(d3.easeLinear);
     }
-    this.onOpacity = .7;
-    this.medOpacity = .5;
-    this.offOpacity = .1;
-    this.lineOpacity = .4;
+    this.onOpacity = options.onOpacity;
+    this.medOpacity = options.medOpacity;
+    this.offOpacity = options.offOpacity;
+    this.lineOpacity = options.lineOpacity;
   }
 
   this.scale = function(){
@@ -49,7 +47,7 @@ function DotView() {
         .attr('cx', x)
         .attr('cy', y)
         .classed('star', true);
-      star.transition(this.fadeIn)
+      star.transition(mrchan.transitions.fadeIn)
         .style('opacity', this.offOpacity);
       this.dots.push({
         'star': star,
