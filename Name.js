@@ -3,6 +3,7 @@ function NamePlate() {
   this.init = function() {
     var body = this.body = mrchan.storage.d3body;
     var minWidth = this.minWidth = mrchan.config.namePlate.minWidth;
+    var maxWidth = this.maxWidth = mrchan.config.namePlate.maxWidth;
     var minHeight = this.minHeight = mrchan.config.namePlate.minHeight;
     var namePlate = this.namePlate = body.append('div')
       .attr('id', 'name-capsule');
@@ -23,7 +24,7 @@ function NamePlate() {
 
   this.scale = function() {
     var porps = this.porps = this.body.node().getBoundingClientRect();
-    var width = porps.width*.3 > this.minWidth ? porps.width*.3 : this.minWidth;
+    var width = porps.width*.3 > this.minWidth ? porps.width*.3 < this.maxWidth ? porps.width*.3: this.maxWidth : this.minWidth;
     var height = width/5;
     this.namePlate
       .style('width', width+'px')

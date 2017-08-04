@@ -39,7 +39,7 @@ function DotView() {
     var dotsHoriz = Math.floor(porps.width * this.density);
     var dotsVert = Math.floor(porps.height * this.density);
     plane.on('mousemove',this.movement.bind(this));
-    for(var i = 0; i<dotsHoriz*dotsVert; i++){
+    for(var i = 0; i<dotsHoriz*dotsVert && i<mrchan.config.stars.maxStars; i++){
       var x = Math.random()*porps.width;
       var y = Math.random()*porps.height;
       var star = starfield.append('circle')
@@ -87,11 +87,11 @@ function DotView() {
   }
 
   this.movement = function(el,hi,me){
-    if(mrchan.config.lowspec)return;
     var coords = d3.mouse(me[hi]);
     for(var i = 0; i<mrchan.storage.dots.length; i++){
       var dot = mrchan.storage.dots[i];
       if(Math.pow(dot.x-coords[0],2)+Math.pow(dot.y-coords[1],2)<5000){
+        if(mrchan.config.lowspec)continue;
         if(dot.opacity!==this.onOpacity){
           dot.opacity=this.onOpacity;
           dot.star.transition(this.blinkIn())
@@ -142,20 +142,22 @@ function DotView() {
   }
 
   this.blinkage = function(){
-    var target = this.dots[Math.floor(Math.random()*this.dots.length)];
-    if(target.opacity===this.offOpacity){
-      target.opacity=this.medOpacity;
-      target.star.transition(this.slowBlink())
-        .style('opacity', this.medOpacity)
-        .style('r', 2);
-      setTimeout(function(){
-        if(target.opacity!==this.offOpacity && !target.lined && target.targeted.length===0){
-          target.opacity = this.offOpacity;
-          target.star.transition(this.slowBlink())
-            .style('opacity', this.offOpacity)
-            .style('r', 1);
-        }
-      }.bind(this), 2000);
+    if(!mrchan.config.lowspec){
+      var target = this.dots[Math.floor(Math.random()*this.dots.length)];
+      if(target.opacity===this.offOpacity){
+        target.opacity=this.medOpacity;
+        target.star.transition(this.slowBlink())
+          .style('opacity', this.medOpacity)
+          .style('r', 2);
+        setTimeout(function(){
+          if(target.opacity!==this.offOpacity && !target.lined && target.targeted.length===0){
+            target.opacity = this.offOpacity;
+            target.star.transition(this.slowBlink())
+              .style('opacity', this.offOpacity)
+              .style('r', 1);
+          }
+        }.bind(this), 2000);
+      }
     }
     setTimeout(this.blinkage.bind(this), Math.floor(Math.random()*500)+500);
   }
