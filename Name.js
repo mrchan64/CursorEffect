@@ -8,12 +8,13 @@ function NamePlate() {
     var namePlate = this.namePlate = body.append('div')
       .attr('id', 'name-capsule');
     var slideBox = this.slideBox = namePlate.append('div')
-      .attr('id', 'name-slide-box');
+      .attr('id', 'name-slide-box')
+      .classed('basic-label', true);
       //.on(hover)
+    slideBox.html('Matthew Chan');
     this.scale();
     var startMarg = namePlate.node().getBoundingClientRect().height-slideBox.node().getBoundingClientRect().height;
     slideBox.style('top', startMarg+'px');
-    slideBox.html('Matthew Chan');
     slideBox.transition()
       .duration(1500)
       .ease(d3.easeSin)
@@ -34,6 +35,44 @@ function NamePlate() {
       .style('width', width+'px')
       .style('height', height*.925+'px')
       .style('font-size', height*.8*.8+'px');
+    this.drawOutline();
+  }
+
+  this.drawOutline = function() {
+    var porps = this.slideBox.node().getBoundingClientRect();
+    var container = this.outlineCont = this.slideBox.append('svg')
+      .attr('id', 'outline')
+      .style('position', 'absolute')
+      .style('top', 0)
+      .style('left', 0)
+      .attr('width', porps.width+'px')
+      .attr('height', porps.height*.9+'px');
+    var path = 'M0 0 v '+porps.height*.9+' h '+porps.width+' v '+(-porps.height*.9)+' Z';
+    var outline = this.outline = container.append('path')
+      .attr('id', 'name-outline')
+      .attr('d', path);
+    var len = porps.height*.9*2+porps.width*2+1;
+    outline
+      .attr('stroke-dasharray', len)
+      .attr('stroke-dashoffset', len);
+    container.on('mouseover', this.animateOutline.bind(this));
+    container.on('mouseout', this.deanimateOutline.bind(this));
+  }
+
+  this.animateOutline = function() {
+    this.outline.transition()
+      .duration(300)
+      .ease(d3.easeSin)
+      .attr('stroke-dashoffset', 0);
+  }
+
+  this.deanimateOutline = function() {
+    var porps = this.slideBox.node().getBoundingClientRect();
+    var len = porps.height*.9*2+porps.width*2+1;
+    this.outline.transition()
+      .duration(300)
+      .ease(d3.easeSin)
+      .attr('stroke-dashoffset', len);
   }
 
 }
