@@ -65,6 +65,10 @@ body {
   user-select: none;
 }
 
+.linkable {
+  cursor: pointer;
+}
+
 #name-capsule {
   margin: 0 auto;
 }
@@ -76,10 +80,6 @@ body {
   color: #dddddd;
   opacity: 0;
   text-align: center;
-}
-
-#name-outline-container {
-  cursor: pointer;
 }
 
 #name-outline {

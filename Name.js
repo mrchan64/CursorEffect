@@ -47,7 +47,7 @@ function NamePlate() {
     var height = this.contHeight = porps.height*.9;
     var width = this.contWidth = porps.width;
     var container = this.outlineCont = this.slideBox.append('svg')
-      .attr('id', 'name-outline-container')
+      .classed('linkable', true)
       .style('position', 'absolute')
       .style('top', 0)
       .style('left', 0)
