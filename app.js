@@ -25,6 +25,30 @@ mrchan.transitions.fadeIn = d3.transition()
   .duration(1000)
   .ease(d3.easeSin);
 
+mrchan.storage.d3body.attr('onload', 'initAll()');
+$(window).resize(scaleAll);
+
+function initAll() {
+  _.each(mrchan.viewStore, function(value, key){
+    if(typeof value == 'function'){
+      mrchan[key] = new value();
+      mrchan[key].init();
+    }
+  })
+}
+
+function scaleAll() {
+  _.each(mrchan.viewStore, function(value, key){
+    mrchan[key].scale();
+  })
+}
+
+
+
+
+
+// This is code for a cursor fireworks effect that looks sort of weird lmao
+
 var pickRandomDir = function(){
   return Math.floor(Math.random()*360);
 }

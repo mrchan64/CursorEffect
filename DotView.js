@@ -25,6 +25,7 @@ function DotView() {
     this.medOpacity = options.medOpacity;
     this.offOpacity = options.offOpacity;
     this.lineOpacity = options.lineOpacity;
+    this.create_dots();
   }
 
   this.scale = function(){
@@ -164,6 +165,3 @@ function DotView() {
 }
 
 mrchan.viewStore.DotView = DotView;
-var dots = mrchan.dots = new mrchan.viewStore.DotView();
-dots.init();
-dots.create_dots();

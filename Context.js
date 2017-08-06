@@ -22,6 +22,10 @@ function ContextMenu() {
     body.on('click', this.closeMenu.bind(this));
   }
 
+  this.scale = function() {
+    
+  }
+
   this.addToMenu = function(text, func) {
     var porps = this.porps = this.body.node().getBoundingClientRect();
     var width = this.width = this.width || porps.width*.1 > this.minWidth ? porps.width*.1 < this.maxWidth ? porps.width*.1: this.maxWidth : this.minWidth;
@@ -68,5 +72,3 @@ function ContextMenu() {
 }
 
 mrchan.viewStore.ContextMenu = ContextMenu;
-var contextMenu = mrchan.contextMenu = new mrchan.viewStore.ContextMenu();
-contextMenu.init();

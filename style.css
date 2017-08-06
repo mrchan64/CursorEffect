@@ -78,6 +78,10 @@ body {
   text-align: center;
 }
 
+#name-outline-container {
+  cursor: pointer;
+}
+
 #name-outline {
   stroke-width: 4px;
   stroke: #dddddd;
@@ -91,6 +95,7 @@ body {
   border: 1px solid #777777;
   opacity: 0;
   position: absolute;
+  z-index: 10;
 }
 
 .context-item {
