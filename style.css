@@ -71,6 +71,7 @@ body {
 
 #name-capsule {
   margin: 0 auto;
+  z-index: 9;
 }
 
 #name-slide-box {
@@ -112,10 +113,25 @@ body {
   background-color: rgba(0, 0, 0, .6);
 }
 
-#width-tester {
+.width-tester {
   font-family: "Arial";
   position: absolute;
   visibility: hidden;
+  height: auto;
+  width: auto;
+  white-space: nowrap;
+}
+
+#directory-container {
+  margin: 0 auto;
+  height: 100%;
+  z-index: 8;
+}
+
+.directory-choice-text {
+  font-family: "Century Gothic";
+  color: #dddddd;
+  position: absolute;
   height: auto;
   width: auto;
   white-space: nowrap;

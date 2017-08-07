@@ -8,7 +8,7 @@ function ContextMenu() {
     this.minWidth = mrchan.config.context.minWidth;
     this.maxWidth = mrchan.config.context.maxWidth;
     this.sizeCalc = body.append('div')
-      .attr('id', 'width-tester');
+      .classed('width-tester', true);
     var menuList = this.menuList = [];
     this.addToMenu('Low Spec Mode', this.toggleLowSpec)
     this.addToMenu('Other Option', function(){})
@@ -23,19 +23,19 @@ function ContextMenu() {
   }
 
   this.scale = function() {
-    
+
   }
 
   this.addToMenu = function(text, func) {
     var porps = this.porps = this.body.node().getBoundingClientRect();
     var width = this.width = this.width || porps.width*.1 > this.minWidth ? porps.width*.1 < this.maxWidth ? porps.width*.1: this.maxWidth : this.minWidth;
     var height = this.itemheight = this.itemheight || width/6;
-    var tempwidth = this.sizeCalc.html(text).node().getBoundingClientRect().width+height*.6;
+    var tempwidth = this.sizeCalc.style('font-size', height*.65+'px').html(text).node().getBoundingClientRect().width+height*.6;
     this.setWidth = this.setWidth ? this.setWidth < tempwidth ? tempwidth : this.setWidth: tempwidth;
     var box = this.menu.append('div')
       .classed('context-item', true)
       .style('height', height*.9+'px')
-      .style('font-height', height*.8+'px')
+      .style('font-size', height*.65+'px')
       .style('padding-top', height*.1+'px')
       .style('padding-left', height*.3+'px')
       .html(text);
