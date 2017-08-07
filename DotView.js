@@ -28,8 +28,81 @@ function DotView() {
     this.create_dots();
   }
 
-  this.scale = function(){
-    
+  this.scale = function() {
+    if(this.timeout)clearTimeout(this.timeout)
+    this.timeout = setTimeout(this._scale.bind(this),500)
+  }
+
+  this._scale = function(){
+    var oldPorps = this.plane.node().getBoundingClientRect();
+    var porps = this.body.node().getBoundingClientRect();
+    var newDots = [];
+    if(porps.height>oldPorps.height){
+      this.plane.style('height', porps.height+'px');
+      var dotsHoriz = Math.floor(oldPorps.width * this.density);
+      var dotsVert = Math.floor((porps.height - oldPorps.height) * this.density);
+      for(var i = 0; i<dotsHoriz*dotsVert && i<mrchan.config.stars.maxStars; i++){
+        var x = Math.random()*porps.width;
+        var y = Math.random()*(porps.height - oldPorps.height)+oldPorps.height;
+        var star = this.starfield.append('circle')
+          .attr('id', 'star'+i)
+          .attr('cx', x)
+          .attr('cy', y)
+          .classed('star', true)
+        star.transition(mrchan.transitions.fadeIn)
+          .style('opacity', this.offOpacity);
+        var dot = {
+          'star': star,
+          'x': x,
+          'y':y,
+          'opacity': this.offOpacity,
+          'lined': false,
+          'targeted': []
+        };
+        this.dots.push(dot);
+        newDots.push(dot);
+      }
+    }
+    if(porps.width>oldPorps.width){
+      this.plane.style('width', porps.width+'px');
+      var dotsHoriz = Math.floor((porps.width - oldPorps.width) * this.density);
+      var dotsVert = Math.floor(porps.height * this.density);
+      for(var i = 0; i<dotsHoriz*dotsVert && i<mrchan.config.stars.maxStars; i++){
+        var x = Math.random()*(porps.width - oldPorps.width)+oldPorps.width;
+        var y = Math.random()*porps.height;
+        var star = this.starfield.append('circle')
+          .attr('id', 'star'+i)
+          .attr('cx', x)
+          .attr('cy', y)
+          .classed('star', true)
+        star.transition(mrchan.transitions.fadeIn)
+          .style('opacity', this.offOpacity);
+        var dot = {
+          'star': star,
+          'x': x,
+          'y':y,
+          'opacity': this.offOpacity,
+          'lined': false,
+          'targeted': []
+        };
+        this.dots.push(dot);
+        newDots.push(dot);
+      }
+    }
+    for(var i = 0; i<newDots.length; i++){
+      var dot = newDots[i]
+      dot.line = this.linefield.append('svg:line')
+        .attr('x1', dot.x)
+        .attr('y1', dot.y)
+        .attr('x2', dot.x)
+        .attr('y2', dot.y)
+        .classed('constellation', true);
+      var coord = this.pick_dot(dot.x, dot.y, 100);
+      dot.x2 = coord.x;
+      dot.y2 = coord.y;
+      if(coord.star) dot.target = coord;
+      this.lines.push(dot.line);
+    }
   }
 
   this.create_dots = function(){
