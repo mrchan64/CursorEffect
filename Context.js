@@ -49,6 +49,7 @@ function ContextMenu() {
   this.renderMenu = function() {
     d3.event.preventDefault();
     this.closeMenu();
+    mrchan.storage.DotView.clearage();
     this.menu.style('opacity', 1)
       .style('left', d3.event.pageX+'px')
       .style('top', d3.event.pageY+'px')
