@@ -30,14 +30,17 @@ function Directory() {
     var lineOff = this.lineOff;
     var lightOn = this.lightOn;
     var lightOff = this.lightOff;
-    var startOffset = this.startOffset
+    var startOffset = this.startOffset;
+    var shiftLeft = this.shiftLeft;
+    var shiftMiddle = this.shiftMiddle;
     var that = this;
     _.each(this.choiceList, function(item){
       item.choiceText
         .style('opacity', 0)
         .style('margin-top', height*startOffset+'px')
         .on('mouseover', lineOn.bind(item))
-        .on('mouseout', lineOff.bind(item));
+        .on('mouseout', lineOff.bind(item))
+        .on('click', shiftLeft.bind(item));
       setTimeout(function(){
         item.choiceText.transition()
           .duration(500)
@@ -47,6 +50,7 @@ function Directory() {
       }, counter);
       counter += 250;
     })
+    mrchan.storage.NamePlate.outlineCont.on('click', shiftMiddle.bind(this));
   }
 
   this.addChoice = function(text, func){
@@ -71,7 +75,8 @@ function Directory() {
     var height = this.height = porps.height*this.heightPorp > this.minHeight ? porps.height*this.heightPorp : this.minHeight;
     this.listDiv
       .style('width', porps.width*this.boxWidth+'px')
-      .style('height', porps.height*this.boxHeight+'px');
+      .style('height', porps.height*this.boxHeight+'px')
+      .style('margin-left', porps.width*(1-this.boxWidth)/2+'px');
     var boxWidth = this.boxWidth;
     var choiceMargin = this.choiceMargin;
     var linePos = this.linePos;
@@ -130,6 +135,35 @@ function Directory() {
       .duration(100)
       .ease(d3.easeSin)
       .style('opacity', 1);
+  }
+
+  this.shiftLeft = function() {
+    //put in code here to create info
+    if(mrchan.config.directory.isLeft)return;
+    mrchan.config.directory.isLeft = true;
+    this.listDiv.transition()
+      .duration(500)
+      .ease(d3.easeCubicInOut)
+      .style('margin-left', '0px');
+    var dims = mrchan.storage.NamePlate.namePlate.node().getBoundingClientRect();
+    mrchan.storage.NamePlate.namePlate.transition()
+      .duration(500)
+      .ease(d3.easeCubicInOut)
+      .style('margin-left', (mrchan.storage.Directory.porps.width-dims.width)/2*.3+'px');
+  }
+
+  this.shiftMiddle = function() {
+    if(!mrchan.config.directory.isLeft)return;
+    mrchan.config.directory.isLeft = false;
+    this.listDiv.transition()
+      .duration(500)
+      .ease(d3.easeCubicInOut)
+      .style('margin-left', this.porps.width*(1-this.boxWidth)/2+'px');
+    var dims = mrchan.storage.NamePlate.namePlate.node().getBoundingClientRect();
+    mrchan.storage.NamePlate.namePlate.transition()
+      .duration(500)
+      .ease(d3.easeCubicInOut)
+      .style('margin-left', (this.porps.width-dims.width)/2+'px');
   }
 
 }

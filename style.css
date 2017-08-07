@@ -70,7 +70,6 @@ body {
 }
 
 #name-capsule {
-  margin: 0 auto;
   z-index: 9;
 }
 
@@ -123,7 +122,6 @@ body {
 }
 
 #directory-container {
-  margin: 0 auto;
   height: 100%;
   z-index: 8;
 }

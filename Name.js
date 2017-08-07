@@ -33,7 +33,8 @@ function NamePlate() {
     this.namePlate
       .style('width', width+'px')
       .style('height', height+'px')
-      .style('margin-top', height+'px');
+      .style('margin-top', height+'px')
+      .style('margin-left', (porps.width-width)/2+'px');
     this.slideBox
       .style('width', width+'px')
       .style('height', height*.925+'px')
