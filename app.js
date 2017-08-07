@@ -4,7 +4,7 @@ mrchan = {};
 mrchan.storage = {'$body': $('body'), 'd3body': d3.select('body')};
 mrchan.viewStore = {};
 mrchan.config = {};
-mrchan.config.lowspec = true;
+mrchan.config.lowspec = false;
 mrchan.config.stars = {};
 mrchan.config.stars.density = .03;
 mrchan.config.stars.maxStars = 2000;
@@ -39,19 +39,15 @@ $(window).resize(scaleAll);
 function initAll() {
   _.each(mrchan.viewStore, function(value, key){
     if(typeof value == 'function'){
-      mrchan[key] = new value();
-      mrchan[key].init();
+      mrchan.storage[key] = new value();
+      mrchan.storage[key].init();
     }
   })
 }
 
 function scaleAll() {
-  /*mrchan.storage.d3body
-    .style('height', '100%')
-    .style('width', '100%');
-  console.log(mrchan.storage.d3body.node().getBoundingRectangle())*/
   _.each(mrchan.viewStore, function(value, key){
-    mrchan[key].scale();
+    mrchan.storage[key].scale();
   })
 }
 

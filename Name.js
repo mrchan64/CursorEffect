@@ -67,6 +67,7 @@ function NamePlate() {
   }
 
   this.animateOutline = function(el,hi,me) {
+    mrchan.storage.DotView.clearage();
     this.calculateLine(d3.mouse(me[hi]));
     this.outline.transition()
       .duration(300)

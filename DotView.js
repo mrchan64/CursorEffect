@@ -87,8 +87,9 @@ function DotView() {
     };
   }
 
-  this.movement = function(el,hi,me){
-    var coords = d3.mouse(me[hi]);
+  this.movement = function(el,hi,me,clear){
+    if(me&&me[hi])var coords = d3.mouse(me[hi]);
+    if(clear)coords=[-1000,-1000];
     for(var i = 0; i<mrchan.storage.dots.length; i++){
       var dot = mrchan.storage.dots[i];
       if(Math.pow(dot.x-coords[0],2)+Math.pow(dot.y-coords[1],2)<5000){
@@ -161,6 +162,10 @@ function DotView() {
       }
     }
     setTimeout(this.blinkage.bind(this), Math.floor(Math.random()*500)+500);
+  }
+
+  this.clearage = function(){
+    this.movement(null, null, null, true);
   }
 }
 

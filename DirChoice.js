@@ -101,6 +101,7 @@ function Directory() {
   }
 
   this.lineOn = function() {
+    mrchan.storage.DotView.clearage();
     this.choiceCont.classed('not-chosen', false);
     this.choiceSpace.select(".directory-selector-line")
       .transition()
