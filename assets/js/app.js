@@ -19,6 +19,7 @@ mrchan.config.namePlate.minHeight = 50;
 mrchan.config.context = {};
 mrchan.config.context.minWidth = 50;
 mrchan.config.context.maxWidth = 150;
+mrchan.config.context.minHeight = 20;
 mrchan.config.directory = {};
 mrchan.config.directory.minHeight = 12;
 mrchan.config.directory.heightPorp = .015;

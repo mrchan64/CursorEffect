@@ -7,6 +7,7 @@ function ContextMenu() {
     this.height = -1;
     this.minWidth = mrchan.config.context.minWidth;
     this.maxWidth = mrchan.config.context.maxWidth;
+    this.minHeight = mrchan.config.context.minHeight;
     this.sizeCalc = body.append('div')
       .classed('width-tester', true);
     var menuList = this.menuList = [];
@@ -29,7 +30,7 @@ function ContextMenu() {
   this.addToMenu = function(text, func) {
     var porps = this.porps = this.body.node().getBoundingClientRect();
     var width = this.width = this.width || porps.width*.1 > this.minWidth ? porps.width*.1 < this.maxWidth ? porps.width*.1: this.maxWidth : this.minWidth;
-    var height = this.itemheight = this.itemheight || width/6;
+    var height = this.itemheight = this.itemheight || (width/6 < this.minHeight ? this.minHeight : width/6);
     var tempwidth = this.sizeCalc.style('font-size', height*.65+'px').html(text).node().getBoundingClientRect().width+height*.6;
     this.setWidth = this.setWidth ? this.setWidth < tempwidth ? tempwidth : this.setWidth: tempwidth;
     var box = this.menu.append('div')
