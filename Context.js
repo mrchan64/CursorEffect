@@ -34,13 +34,15 @@ function ContextMenu() {
     this.setWidth = this.setWidth ? this.setWidth < tempwidth ? tempwidth : this.setWidth: tempwidth;
     var box = this.menu.append('div')
       .classed('context-item', true)
+      .classed('basic-label', true)
+      .classed('linkable', true)
       .style('height', height*.9+'px')
       .style('font-size', height*.65+'px')
       .style('padding-top', height*.1+'px')
       .style('padding-left', height*.3+'px')
       .html(text);
     box.on('click', func);
-    this.height+=Math.ceil(height*.9)+Math.ceil(height*.1);
+    this.height+=box.node().getBoundingClientRect().height;
     this.menuList.push(box);
   }
 

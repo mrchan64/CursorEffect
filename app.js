@@ -4,7 +4,7 @@ mrchan = {};
 mrchan.storage = {'$body': $('body'), 'd3body': d3.select('body')};
 mrchan.viewStore = {};
 mrchan.config = {};
-mrchan.config.lowspec = false;
+mrchan.config.lowspec = true;
 mrchan.config.stars = {};
 mrchan.config.stars.density = .03;
 mrchan.config.stars.maxStars = 2000;
@@ -19,6 +19,14 @@ mrchan.config.namePlate.minHeight = 50;
 mrchan.config.context = {};
 mrchan.config.context.minWidth = 50;
 mrchan.config.context.maxWidth = 150;
+mrchan.config.directory = {};
+mrchan.config.directory.minHeight = 12;
+mrchan.config.directory.heightPorp = .015;
+mrchan.config.directory.boxWidth = .3;
+mrchan.config.directory.boxHeight = .7;
+mrchan.config.directory.choiceMargin = 2.5;
+mrchan.config.directory.startOffset = 1;
+mrchan.config.directory.linePos = 1.5;
 
 mrchan.transitions = {};
 mrchan.transitions.fadeIn = d3.transition()
@@ -38,6 +46,10 @@ function initAll() {
 }
 
 function scaleAll() {
+  /*mrchan.storage.d3body
+    .style('height', '100%')
+    .style('width', '100%');
+  console.log(mrchan.storage.d3body.node().getBoundingRectangle())*/
   _.each(mrchan.viewStore, function(value, key){
     mrchan[key].scale();
   })

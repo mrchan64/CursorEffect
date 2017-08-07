@@ -103,14 +103,14 @@ body {
   font-family: "Arial";
   overflow: hidden;
   border-bottom: 1px solid #777777;
-  background-color: rgba(34, 34, 34, .6);
+  background-color: rgba(34, 34, 34, 1);
   color: #777777;
 }
 .context-item:hover{
-  background-color: rgba(20, 20, 20, .6);
+  background-color: rgba(20, 20, 20, 1);
 }
 .context-item:click{
-  background-color: rgba(0, 0, 0, .6);
+  background-color: rgba(0, 0, 0, 1);
 }
 
 .width-tester {
@@ -135,4 +135,16 @@ body {
   height: auto;
   width: auto;
   white-space: nowrap;
+}
+
+.directory-selector {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.directory-selector-line {
+  opacity: 1;
+  stroke-width: 1.5;
+  stroke: #dddddd;
 }
