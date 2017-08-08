@@ -13,6 +13,8 @@ function Directory() {
     this.choiceMargin = mrchan.config.directory.choiceMargin;
     this.startOffset = mrchan.config.directory.startOffset;
     this.linePos = mrchan.config.directory.linePos;
+    this.sepLine = listDiv.append('svg').attr('id', 'directory-separator');
+    this.sepLine.append('line').attr('id', 'directory-separator-line');
     this.buffer = listDiv.append('div');
     this.addChoice('About Me');
     this.addChoice('Resume');
@@ -99,10 +101,19 @@ function Directory() {
         .attr('x1', width/2)
         .attr('x2', width/2);
     })
-    var top = (this.listDiv.node().getBoundingClientRect().height - height*2*this.choiceList.length)/2.5;
+    var dims = this.listDiv.node().getBoundingClientRect();
+    var top = (dims.height - height*2*this.choiceList.length)/2.5;
     this.buffer
       .style('height', top+'px')
       .style('width', porps.width*.3+'px');
+    this.sepLine
+      .style('top', dims.height/2+'px')
+      .style('height', '0px');
+    this.sepLine.select("#directory-separator-line")
+      .attr('x1', 3)
+      .attr('x2', 3)
+      .attr('y1', 0)
+      .attr('y2', dims.height);
   }
 
   this.lineOn = function() {
@@ -138,6 +149,7 @@ function Directory() {
   }
 
   this.shiftLeft = function() {
+    //bound to item object being shifted
     //put in code here to create info
     if(mrchan.config.directory.isLeft)return;
     mrchan.config.directory.isLeft = true;
@@ -150,9 +162,19 @@ function Directory() {
       .duration(500)
       .ease(d3.easeCubicInOut)
       .style('margin-left', (mrchan.storage.Directory.porps.width-dims.width)/2*.3+'px');
+    var dims2 = this.listDiv.node().getBoundingClientRect();
+    var listDiv = this.listDiv;
+    setTimeout(function(){
+      listDiv.select("#directory-separator").transition()
+        .duration(200)
+        .ease(d3.easeCubicInOut)
+        .style('top', '0px')
+        .style('height', dims2.height+'px');
+    }, 300)
   }
 
   this.shiftMiddle = function() {
+    //bound to this
     if(!mrchan.config.directory.isLeft)return;
     mrchan.config.directory.isLeft = false;
     this.listDiv.transition()
@@ -164,6 +186,12 @@ function Directory() {
       .duration(500)
       .ease(d3.easeCubicInOut)
       .style('margin-left', (this.porps.width-dims.width)/2+'px');
+    var dims2 = this.listDiv.node().getBoundingClientRect();
+    this.listDiv.select("#directory-separator").transition()
+      .duration(200)
+      .ease(d3.easeCubicInOut)
+      .style('top', dims2.height/2+'px')
+      .style('height', '0px');
   }
 
 }

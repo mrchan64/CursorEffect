@@ -127,8 +127,21 @@ body {
 }
 
 #directory-container {
+  position: relative;
   height: 100%;
   z-index: 8;
+}
+
+#directory-separator {
+  -webkit-mask-image: linear-gradient(transparent 10%, black 13%, black 87%, transparent 90%);
+  position: absolute;
+  right: -10%;
+  width: 5px;
+}
+
+#directory-separator-line {
+  stroke: #dddddd;
+  stroke-width: 3;
 }
 
 .directory-choice-text {
