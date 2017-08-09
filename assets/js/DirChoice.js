@@ -52,7 +52,6 @@ function Directory() {
       }, counter);
       counter += 250;
     })
-    mrchan.storage.NamePlate.outlineCont.on('click', shiftMiddle.bind(this));
   }
 
   this.addChoice = function(text, func){
@@ -75,10 +74,11 @@ function Directory() {
   this.scale = function() {
     var porps = this.porps = this.body.node().getBoundingClientRect();
     var height = this.height = porps.height*this.heightPorp > this.minHeight ? porps.height*this.heightPorp : this.minHeight;
+    var left = mrchan.config.directory.isLeft ? 0 : porps.width*(1-this.boxWidth)/2;
     this.listDiv
       .style('width', porps.width*this.boxWidth+'px')
       .style('height', porps.height*this.boxHeight+'px')
-      .style('margin-left', porps.width*(1-this.boxWidth)/2+'px');
+      .style('margin-left', left+'px');
     var boxWidth = this.boxWidth;
     var choiceMargin = this.choiceMargin;
     var linePos = this.linePos;
@@ -149,6 +149,7 @@ function Directory() {
   }
 
   this.shiftLeft = function() {
+    //called from item event listener
     //bound to item object being shifted
     //put in code here to create info
     if(mrchan.config.directory.isLeft)return;
@@ -157,11 +158,7 @@ function Directory() {
       .duration(500)
       .ease(d3.easeCubicInOut)
       .style('margin-left', '0px');
-    var dims = mrchan.storage.NamePlate.namePlate.node().getBoundingClientRect();
-    mrchan.storage.NamePlate.namePlate.transition()
-      .duration(500)
-      .ease(d3.easeCubicInOut)
-      .style('margin-left', (mrchan.storage.Directory.porps.width-dims.width)/2*.3+'px');
+    mrchan.storage.NamePlate.shiftLeft();
     var dims2 = this.listDiv.node().getBoundingClientRect();
     var listDiv = this.listDiv;
     setTimeout(function(){
@@ -174,18 +171,11 @@ function Directory() {
   }
 
   this.shiftMiddle = function() {
-    //bound to this
-    if(!mrchan.config.directory.isLeft)return;
-    mrchan.config.directory.isLeft = false;
+    //called from name shift middle
     this.listDiv.transition()
       .duration(500)
       .ease(d3.easeCubicInOut)
       .style('margin-left', this.porps.width*(1-this.boxWidth)/2+'px');
-    var dims = mrchan.storage.NamePlate.namePlate.node().getBoundingClientRect();
-    mrchan.storage.NamePlate.namePlate.transition()
-      .duration(500)
-      .ease(d3.easeCubicInOut)
-      .style('margin-left', (this.porps.width-dims.width)/2+'px');
     var dims2 = this.listDiv.node().getBoundingClientRect();
     this.listDiv.select("#directory-separator").transition()
       .duration(200)

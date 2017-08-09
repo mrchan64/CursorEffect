@@ -30,11 +30,13 @@ function NamePlate() {
     var porps = this.porps = this.body.node().getBoundingClientRect();
     var width = porps.width*.3 > this.minWidth ? porps.width*.3 < this.maxWidth ? porps.width*.3: this.maxWidth : this.minWidth;
     var height = width/5;
+    var dims = this.namePlate.node().getBoundingClientRect();
+    var left = mrchan.config.directory.isLeft ? (porps.width-dims.width)/2*.3 : (porps.width-width)/2;
     this.namePlate
       .style('width', width+'px')
       .style('height', height+'px')
       .style('margin-top', height+'px')
-      .style('margin-left', (porps.width-width)/2+'px');
+      .style('margin-left', left+'px');
     this.slideBox
       .style('width', width+'px')
       .style('height', height*.925+'px')
@@ -65,6 +67,7 @@ function NamePlate() {
     container.on('mouseover', this.animateOutline.bind(this));
     container.on('mouseout', this.deanimateOutline.bind(this));
     container.on('contextmenu', function(){d3.event.preventDefault(); d3.event.stopPropagation()});
+    container.on('click', this.shiftMiddle.bind(this));
   }
 
   this.animateOutline = function(el,hi,me) {
@@ -87,6 +90,27 @@ function NamePlate() {
 
   this.calculateLine = function(coords) {
 
+  }
+
+  this.shiftLeft = function() {
+    // called from dirchoice shiftleft
+    var dims = this.namePlate.node().getBoundingClientRect();
+    this.namePlate.transition()
+      .duration(500)
+      .ease(d3.easeCubicInOut)
+      .style('margin-left', (this.porps.width-dims.width)/2*.3+'px');
+  }
+
+  this.shiftMiddle = function() {
+    //called from the listener on outline cont so you need the check here
+    if(!mrchan.config.directory.isLeft)return;
+    mrchan.config.directory.isLeft = false;
+    var dims = this.namePlate.node().getBoundingClientRect();
+    mrchan.storage.NamePlate.namePlate.transition()
+      .duration(500)
+      .ease(d3.easeCubicInOut)
+      .style('margin-left', (this.porps.width-dims.width)/2+'px');
+    mrchan.storage.Directory.shiftMiddle();
   }
 
 }
