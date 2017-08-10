@@ -70,7 +70,7 @@ function ContextMenu() {
   }
 
   this.toggleLowSpec = function(){
-    mrchan.config.lowspec = !mrchan.config.lowspec
+    mrchan.config.lowspec = mrchan.config.mobile ? true : !mrchan.config.lowspec;
   }
 
 }

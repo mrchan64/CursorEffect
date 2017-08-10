@@ -4,6 +4,7 @@ mrchan = {};
 mrchan.storage = {'$body': $('body'), 'd3body': d3.select('body')};
 mrchan.viewStore = {};
 mrchan.config = {};
+mrchan.config.mobile = false;
 mrchan.config.lowspec = false;
 mrchan.config.stars = {};
 mrchan.config.stars.density = .03;
