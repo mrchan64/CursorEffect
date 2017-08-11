@@ -172,11 +172,24 @@ body {
   overflow-y: scroll;
   overflow-x: hidden;
   right: 0;
-  z-index: -1;
+  pointer-events: none;
 }
 
 .info-container-item {
   position: relative;
   overflow: hidden;
   float: left;
+}
+
+.info-container-child {
+  color: #aaaaaa;
+  text-align: right;
+  position: absolute;
+  top: 0px;
+  width: 80%;
+  height: 100%;
+}
+
+.info-container-child h1 {
+  font-family: "Century Gothic"
 }
