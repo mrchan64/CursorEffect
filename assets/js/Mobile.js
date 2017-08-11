@@ -5,7 +5,7 @@ function Mobile() {
     var start;
     console.log(document.cookie)
     if(-1 !== (start = cookie.indexOf('lowspec'))){
-      var lowspec = cookie.substring(start+'lowspec'.length+1,1);
+      var lowspec = cookie.substring(start+('lowspec').length+1,1);
       console.log(lowspec, document.cookie)
       mrchan.config.lowspec = lowspec==='y';
     }
