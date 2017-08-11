@@ -107,8 +107,8 @@ function Directory() {
       .style('height', top+'px')
       .style('width', porps.width*.3+'px');
     this.sepLine
-      .style('top', dims.height/2+'px')
-      .style('height', '0px');
+      .style('top', mrchan.config.directory.isLeft ? '0px' : dims.height/2+'px')
+      .style('height', mrchan.config.directory.isLeft ? dims.height : '0px');
     this.sepLine.select("#directory-separator-line")
       .attr('x1', 3)
       .attr('x2', 3)

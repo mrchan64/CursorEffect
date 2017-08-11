@@ -12,7 +12,7 @@ function ContextMenu() {
       .classed('width-tester', true);
     var menuList = this.menuList = [];
     this.addToMenu('Low Spec Mode', this.toggleLowSpec)
-    this.addToMenu('Other Option', function(){})
+    this.addToMenu('Return Home', this.returnHome)
     this.addToMenu('Option 3', function(){})
     this.addToMenu('Option 4', function(){})
     var width = this.setWidth
@@ -71,6 +71,19 @@ function ContextMenu() {
 
   this.toggleLowSpec = function(){
     mrchan.config.lowspec = mrchan.config.mobile ? true : !mrchan.config.lowspec;
+    document.cookie = mrchan.config.mobile ? "lowspec=y" : "lowspec=n";
+  }
+
+  this.nextItem = function(){
+
+  }
+
+  this.previousItem = function(){
+
+  }
+
+  this.returnHome = function(){
+    mrchan.storage.NamePlate.shiftMiddle();
   }
 
 }
