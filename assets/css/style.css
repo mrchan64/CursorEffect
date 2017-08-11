@@ -166,3 +166,16 @@ body {
   stroke-width: 1.5;
   stroke: #dddddd;
 }
+
+#info-container {
+  -webkit-mask-image: linear-gradient(transparent 0%, black 3%, black 97%, transparent 100%);
+  position: absolute;
+  overflow: scroll;
+}
+
+.info-container-item {
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  float: right;
+}
