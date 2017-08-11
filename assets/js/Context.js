@@ -71,7 +71,7 @@ function ContextMenu() {
 
   this.toggleLowSpec = function(){
     mrchan.config.lowspec = mrchan.config.mobile ? true : !mrchan.config.lowspec;
-    document.cookie = mrchan.config.mobile ? "lowspec=y" : "lowspec=n";
+    if(!mrchan.config.mobile)document.cookie = mrchan.config.lowspec ? "lowspec=y" : "lowspec=";
   }
 
   this.nextItem = function(){
