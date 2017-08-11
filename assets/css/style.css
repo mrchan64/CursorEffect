@@ -18,6 +18,10 @@ body {
   background-color: #222222;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 @font-face {
   font-family: "Century Gothic";
   src: url(assets/fonts/Century Gothic Std Regular.otf);
@@ -116,7 +120,7 @@ body {
 .context-item:click{
   background-color: rgba(0, 0, 0, 1);
 }
-
+  
 .width-tester {
   font-family: "Arial";
   position: absolute;
@@ -170,12 +174,14 @@ body {
 #info-container {
   -webkit-mask-image: linear-gradient(transparent 0%, black 3%, black 97%, transparent 100%);
   position: absolute;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  right: 0;
+  z-index: -1;
 }
 
 .info-container-item {
   position: relative;
   overflow: hidden;
-  background-color: #ffffff;
-  float: right;
+  float: left;
 }
