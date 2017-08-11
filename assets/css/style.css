@@ -22,11 +22,6 @@ body {
     display: none;
 }
 
-@font-face {
-  font-family: "Century Gothic";
-  src: url(assets/fonts/Century Gothic Std Regular.otf);
-}
-
 #plane {
   position: absolute;
 }
