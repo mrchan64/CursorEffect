@@ -1,0 +1,22 @@
+{
+  "name": "mrchan64.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrchan64/mrchan64.github.io.git"
+  },
+  "author": "Matthew Chan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrchan64/mrchan64.github.io/issues"
+  },
+  "homepage": "https://github.com/mrchan64/mrchan64.github.io#readme",
+  "dependencies": {
+    "express": "4.15.4"
+  }
+}
