@@ -89,7 +89,6 @@ function InfoPanel() {
     var start = this.viewport.node().scrollTop;
     var end = this.displace.indexOf(id) * this.dispHeight;
     var i = d3.interpolateNumber(start, end);
-    console.log(start, end)
     var viewport = this.viewport;
     var tw = function(t){viewport.node().scrollTop = i(t)};
     this.viewport.transition()

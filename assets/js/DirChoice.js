@@ -133,25 +133,40 @@ function Directory() {
   }
 
   this.lineOff = function() {
+    this.listDiv.selectAll(".not-chosen")
+      .transition()
+      .duration(100)
+      .ease(d3.easeSin)
+      .style('opacity', 1);
+    if(this.choiceCont.classed('active'))return;
     this.choiceCont.classed('not-chosen', true);
-    var pos = this.choiceText.node().getBoundingClientRect().width/2
+    var pos = this.choiceText.node().getBoundingClientRect().width/2;
     this.choiceSpace.select(".directory-selector-line")
       .transition()
       .duration(100)
       .ease(d3.easeSin)
       .attr('x1', pos)
       .attr('x2', pos);
-    this.listDiv.selectAll(".not-chosen")
-      .transition()
-      .duration(100)
-      .ease(d3.easeSin)
-      .style('opacity', 1);
   }
 
   this.shiftLeft = function() {
     //called from item event listener
     //bound to item object being shifted
     //put in code here to create info
+    var pos = this.choiceText.node().getBoundingClientRect().width/2;
+    this.listDiv.select(".active")
+      .classed('not-chosen', true)
+      .classed('active', false)
+      .style('opacity', .7)
+      .select(".directory-selector-line")
+      .transition()
+      .duration(100)
+      .ease(d3.easeSin)
+      .attr('x1', pos)
+      .attr('x2', pos);
+    this.choiceCont
+      .classed('not-chosen', false)
+      .classed('active', true);
     if(mrchan.config.directory.isLeft){
       mrchan.storage.InfoPanel.changeTo(this.id);
       return;
@@ -177,6 +192,16 @@ function Directory() {
 
   this.shiftMiddle = function() {
     //called from name shift middle
+    var pos = this.listDiv.select(".directory-choice-container.active").node().getBoundingClientRect().width/2;
+    this.listDiv.select(".active")
+      .classed('not-chosen', true)
+      .classed('active', false)
+      .select(".directory-selector-line")
+      .transition()
+      .duration(100)
+      .ease(d3.easeSin)
+      .attr('x1', pos)
+      .attr('x2', pos);
     this.listDiv.transition()
       .duration(500)
       .ease(d3.easeCubicInOut)
