@@ -16,11 +16,11 @@ function Directory() {
     this.sepLine = listDiv.append('svg').attr('id', 'directory-separator');
     this.sepLine.append('line').attr('id', 'directory-separator-line');
     this.buffer = listDiv.append('div');
-    this.addChoice('About Me');
-    this.addChoice('Resume');
-    this.addChoice('Languages');
-    this.addChoice('Projects');
-    this.addChoice('Interests');
+    this.addChoice('About Me', 'about');
+    this.addChoice('Resume', 'resume');
+    this.addChoice('Languages', 'lang');
+    this.addChoice('Projects', 'project');
+    this.addChoice('Interests', 'interest');
     this.scale();
     this.renderChoices();
   }
@@ -54,7 +54,7 @@ function Directory() {
     })
   }
 
-  this.addChoice = function(text, func){
+  this.addChoice = function(text, id){
     var choiceCont = this.listDiv.append('div')
       .classed('directory-choice-container', true)
       .classed('not-chosen', true);
@@ -67,7 +67,7 @@ function Directory() {
       .classed('directory-selector', true);
     space.append('line')
       .classed('directory-selector-line', true);
-    this.choiceList.push({choiceCont: choiceCont, choiceText: choiceText, choiceSpace: space, listDiv: this.listDiv});
+    this.choiceList.push({choiceCont: choiceCont, choiceText: choiceText, choiceSpace: space, listDiv: this.listDiv, id: id});
     choiceText.on('contextmenu', function(){d3.event.preventDefault(); d3.event.stopPropagation()});
   }
 
@@ -152,7 +152,10 @@ function Directory() {
     //called from item event listener
     //bound to item object being shifted
     //put in code here to create info
-    if(mrchan.config.directory.isLeft)return;
+    if(mrchan.config.directory.isLeft){
+      mrchan.storage.InfoPanel.changeTo(this.id);
+      return;
+    };
     mrchan.config.directory.isLeft = true;
     this.listDiv.transition()
       .duration(500)
@@ -161,12 +164,14 @@ function Directory() {
     mrchan.storage.NamePlate.shiftLeft();
     var dims2 = this.listDiv.node().getBoundingClientRect();
     var listDiv = this.listDiv;
+    var id = this.id;
     setTimeout(function(){
       listDiv.select("#directory-separator").transition()
         .duration(200)
         .ease(d3.easeCubicInOut)
         .style('top', '0px')
         .style('height', dims2.height+'px');
+      mrchan.storage.InfoPanel.reveal(id);
     }, 300)
   }
 
@@ -182,6 +187,7 @@ function Directory() {
       .ease(d3.easeCubicInOut)
       .style('top', dims2.height/2+'px')
       .style('height', '0px');
+    mrchan.storage.InfoPanel.hide();
   }
 
 }

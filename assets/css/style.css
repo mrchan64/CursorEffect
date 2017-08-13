@@ -173,6 +173,7 @@ body {
   overflow-x: hidden;
   right: 0;
   pointer-events: none;
+  opacity: 0;
 }
 
 .info-container-item {

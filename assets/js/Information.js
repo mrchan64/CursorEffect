@@ -3,17 +3,17 @@ function InfoPanel() {
   this.init = function() {
     var body = this.body = mrchan.storage.d3body;
     var porps = this.porps = body.node().getBoundingClientRect();
-    var viewport = this.viewport = this.body.append('container')
+    var viewport = this.viewport = this.body.append('div')
       .attr('id', 'info-container');
     this.titleHeight = mrchan.config.inform.titleHeight;
     this.bodyHeight = mrchan.config.inform.bodyHeight;
     this.boxWidth = (1-mrchan.config.directory.boxWidth)*.8;
-    this.infoList = [];
+    this.displace = [];
     this.addInfo('about');
-    this.addInfo();
-    this.addInfo();
-    this.addInfo();
-    this.addInfo();
+    this.addInfo('resume');
+    this.addInfo('lang');
+    this.addInfo('project');
+    this.addInfo('interest');
     this.scale();
   }
 
@@ -33,10 +33,11 @@ function InfoPanel() {
     this.viewport.selectAll(".buffer")
       .style('width', porps.width*(1-this.boxWidth) < minLeft ? porps.width-minLeft+'px' : porps.width*this.boxWidth+'px')
       .style('height', porps.height*.7*.5+'px');
+    this.dispHeight = porps.height*.7*1.5;
   }
 
   this.addInfo = function(filename) {
-    if(this.infoList.length !== 0){
+    if(this.displace.length !== 0){
       this.viewport.append('div')
         .classed('buffer', true)
         .style('position', 'relative')
@@ -54,6 +55,7 @@ function InfoPanel() {
         scale();
       })
     }
+    this.displace.push(filename);
     return {container: cont}
   }
 
@@ -63,6 +65,36 @@ function InfoPanel() {
     this.viewport.selectAll("p")
       .style('background-color', '#222222')
       .style('font-size', this.porps.height*this.bodyHeight+'px');
+  }
+
+  this.reveal = function(id) {
+    this.viewport
+      .style('top', this.porps.height*.15+20+'px')
+      .node().scrollTop = this.displace.indexOf(id) * this.dispHeight;
+    this.viewport.transition()
+      .duration(200)
+      .ease(d3.easeCubicInOut)
+      .style('opacity', 1)
+      .style('top', this.porps.height*.15+'px');
+  }
+
+  this.hide = function() {
+    this.viewport.transition()
+      .duration(200)
+      .ease(d3.easeCubicInOut)
+      .style('opacity', 0);
+  }
+
+  this.changeTo = function(id) {
+    var start = this.viewport.node().scrollTop;
+    var end = this.displace.indexOf(id) * this.dispHeight;
+    var i = d3.interpolateNumber(start, end);
+    console.log(start, end)
+    var viewport = this.viewport;
+    var tw = function(t){viewport.node().scrollTop = i(t)};
+    this.viewport.transition()
+      .duration(500)
+      .tween('scrollingtween', function(){return tw});
   }
 
 }
