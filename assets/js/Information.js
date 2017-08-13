@@ -33,11 +33,6 @@ function InfoPanel() {
     this.viewport.selectAll(".buffer")
       .style('width', porps.width*(1-this.boxWidth) < minLeft ? porps.width-minLeft+'px' : porps.width*this.boxWidth+'px')
       .style('height', porps.height*.7*.5+'px');
-    this.viewport.selectAll("h1")
-      .style('font-size', this.porps.height*this.titleHeight+'px');
-    this.viewport.selectAll("p")
-      .style('font-size', this.porps.height*this.bodyHeight+'px');
-    console.log(this.porps.height*this.titleHeight)
   }
 
   this.addInfo = function(filename) {
@@ -51,13 +46,23 @@ function InfoPanel() {
       .classed('info-container-item', true);
     if(filename){
       var grouping = $('<div></div>');
+      var scale = this.scaleElems.bind(this);
       grouping.load('assets/htm/'+filename+'.htm', function(){
         grouping = d3.select(grouping.get(0));
         var text = grouping.select('.info-container-child').node();
         cont.node().appendChild(text);
+        scale();
       })
     }
     return {container: cont}
+  }
+
+  this.scaleElems = function() {
+    this.viewport.selectAll("h1")
+      .style('font-size', this.porps.height*this.titleHeight+'px');
+    this.viewport.selectAll("p")
+      .style('background-color', '#222222')
+      .style('font-size', this.porps.height*this.bodyHeight+'px');
   }
 
 }

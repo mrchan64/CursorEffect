@@ -185,9 +185,9 @@ body {
   color: #aaaaaa;
   text-align: right;
   position: absolute;
-  top: 0px;
-  width: 80%;
-  height: 100%;
+  top: 5%;
+  width: 85%;
+  height: 90%;
 }
 
 .info-container-child h1 {
