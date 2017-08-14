@@ -30,18 +30,6 @@ function DotView() {
 
   this.scale = function() {
     var porps = this.body.node().getBoundingClientRect();
-    /*if(porps.height<500 || porps.width<400){
-      if(this.wasBig){
-        this.wasBig = false;
-        this.saveSpec = mrchan.config.lowspec;
-        mrchan.config.lowspec = true;
-      }
-    }else{
-      if(!this.wasBig){
-        mrchan.config.lowspec = this.saveSpec || mrchan.config.lowspec;
-      }
-      this.wasBig = true;
-    }*/
     if(this.timeout)clearTimeout(this.timeout)
     this.timeout = setTimeout(this._scale.bind(this),500)
   }
