@@ -2,6 +2,7 @@ d3.namespace = "http://www.w3.org/2000/svg";
 
 mrchan = {};
 mrchan.storage = {'$body': $('body'), 'd3body': d3.select('body')};
+mrchan.utils = {};
 mrchan.viewStore = {};
 mrchan.config = {};
 mrchan.config.mobile = false;
