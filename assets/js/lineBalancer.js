@@ -7,6 +7,9 @@ function lineBalancer(parent, paraelem) {
 
   var maxwidth = this.maxwidth = this.parent.width();
 
+  var paracont = $('<div class="balance-parent"/>');
+  paracont.append(paraelem);
+
   if(this.bal.length == 0){
     bal = this.bal = $('<div/>');
     bal.attr('id', 'balance-tester');
@@ -35,7 +38,7 @@ function lineBalancer(parent, paraelem) {
       }else{
         if(char!=' ')currentString+=char;
       }
-      if(char===' '&&currentString.length!=0)endword = true
+      if(char===' '&&this.data[i-1]!=='>')endword = true
     }
     if(endword){
       metaData.push({
@@ -52,13 +55,16 @@ function lineBalancer(parent, paraelem) {
     var totalString = "";
     var arr = [];
     var width = 0;
+    var height = 0;
     for(i in words){
       var word = words[i].word;
       if(words[i].bold) word = "<b>"+word+"</b>";
       bal.html(totalString+word)
-      width = bal.width();
-      if(width>maxwidth)break;
-      totalString+=word+' ';
+      var newwidth = bal.width();
+      height = bal.height();
+      if(newwidth>maxwidth)break;
+      width = newwidth;
+      totalString+=word+" ";
       totalString = totalString.replace('</b> <b>', ' ');
       arr.push(words[i]);
     }
@@ -66,9 +72,10 @@ function lineBalancer(parent, paraelem) {
 
     var ret = {
       'words': arr,
-      'width': width
+      'width': width,
+      'height': height
     };
-    return ret
+    return ret;
   }
 
   var divHandlers = this.divHandlers = [];
@@ -79,13 +86,24 @@ function lineBalancer(parent, paraelem) {
     var oneLine = findSubset(processor);
     divHandlers.push(oneLine);
   }
-  console.log(divHandlers);
 
   var initialConstruct = this.initialConstruct = function() {
+    var continuity = 0;
     for(i in divHandlers){
       var cont = $('<div class="balance-div"/>');
+      var para = paraelem.clone()
+      cont.append(para);
+      cont.css('width', divHandlers[i].width);
+      para.css('left', -continuity);
+      para.css('font-size', mrchan.storage.InfoPanel.porps.height*mrchan.storage.InfoPanel.bodyHeight+'px');
+      continuity+=divHandlers[i].width;
+      parent.append(cont);
+      cont.css('height',para.css('height'));
     }
   }
+  console.log(divHandlers)
+
+  initialConstruct();
 
 }
 
