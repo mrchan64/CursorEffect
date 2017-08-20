@@ -51,7 +51,9 @@ function InfoPanel() {
       var grouping = $('<div/>');
       var scale = this.scaleElems.bind(this);
       var linebalancers = this.linebalancers;
+      var viewport = this.viewport;
       grouping.load('assets/htm/'+filename+'.htm', function(){
+        viewport.style('display', 'block');
         var text = grouping.find('.info-container-child');
         var textbody = $('<div class="info-container-child"/>');
         cont.node().appendChild(textbody.get(0));
@@ -61,6 +63,7 @@ function InfoPanel() {
           first = false;
           linebalancers.push(new mrchan.utils.lineBalancer(textbody, $(this)));
         })
+        viewport.style('display', 'none');
       });
     }
     this.displace.push(filename);
@@ -76,7 +79,7 @@ function InfoPanel() {
   this.reveal = function(id) {
     this.viewport
       .style('top', this.porps.height*.15+20+'px')
-      //.style('display', 'block')
+      .style('display', 'block')
       .node().scrollTop = this.displace.indexOf(id) * this.dispHeight;
     this.viewport.transition()
       .duration(200)
@@ -90,7 +93,7 @@ function InfoPanel() {
       .duration(200)
       .ease(d3.easeCubicInOut)
       .style('opacity', 0)
-      //.style('display', 'none');
+      .style('display', 'none');
   }
 
   this.changeTo = function(id) {
