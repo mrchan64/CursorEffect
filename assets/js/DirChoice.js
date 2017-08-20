@@ -154,6 +154,18 @@ function Directory() {
     //bound to item object being shifted
     //put in code here to create info
     var pos = this.choiceText.node().getBoundingClientRect().width/2;
+    if(this.choiceCont.classed('active')){
+      this.choiceCont
+        .select(".directory-selector-line")
+        .attr('x1', pos)
+        .attr('x2', pos)
+        .transition()
+        .duration(100)
+        .ease(d3.easeSin)
+        .attr('x1', 0)
+        .attr('x2', pos*2);
+      return;
+    }
     this.listDiv.select(".active")
       .classed('not-chosen', true)
       .classed('active', false)

@@ -194,11 +194,17 @@ body {
 
 .info-container-child h1 {
   font-family: "Century Gothic";
+  line-height: 150%;
 }
 
 .info-container-child p {
   font-family: "Arial";
   line-height: 150%;
+}
+
+.info-container-buffer {
+  width: 100%;
+  height: 3%;
 }
 
 .tooltip {
@@ -244,4 +250,13 @@ body {
   top: 0;
   margin: 0 0;
   white-space: nowrap;
+  width: auto;
+}
+
+.balance-div h1 {
+  position: relative;
+  top: 0;
+  margin: 0 0;
+  white-space: nowrap;
+  width: auto;
 }

@@ -9,6 +9,7 @@ function InfoPanel() {
     this.bodyHeight = mrchan.config.inform.bodyHeight;
     this.boxWidth = (1-mrchan.config.directory.boxWidth)*.8;
     this.displace = [];
+    this.linebalancers = [];
     this.addInfo('about');
     this.addInfo('resume');
     this.addInfo('lang');
@@ -34,6 +35,7 @@ function InfoPanel() {
       .style('width', porps.width*(1-this.boxWidth) < minLeft ? porps.width-minLeft+'px' : porps.width*this.boxWidth+'px')
       .style('height', porps.height*.7*.5+'px');
     this.dispHeight = porps.height*.7*1.5;
+    this.scaleElems();
   }
 
   this.addInfo = function(filename) {
@@ -48,37 +50,17 @@ function InfoPanel() {
     if(filename){
       var grouping = $('<div/>');
       var scale = this.scaleElems.bind(this);
+      var linebalancers = this.linebalancers;
       grouping.load('assets/htm/'+filename+'.htm', function(){
         var text = grouping.find('.info-container-child');
         var textbody = $('<div class="info-container-child"/>');
         cont.node().appendChild(textbody.get(0));
-        var bal = new mrchan.utils.lineBalancer(textbody, text.find('p'));
-        /*cont.node().appendChild(text.get(0));
-        scale();
-        text.find("[data-words]").attr("data-words", function(i,d){
-          var $self = $(this),
-              $words = d.split("|"),
-              total = $words.length,
-              state = 'off';
-          for(i in $words) $self.append($('<span/>', {'text': $words[i]}));
-
-          $words = $self.find("span").show();
-        console.log($words)
-          $words.eq(1).hide();
-          $self.css({'width': $words.eq(0).width(), 'height': $words.eq(0).height()});
-          $self.on('mouseover', function(){
-            if(state==='on')return;
-            state = 'on';
-            $self.stop().animate({'width': $words.eq(1).width()},1000);
-            $words.stop().fadeOut().eq(1).fadeIn().delay(1000).show();
-          });
-          $self.on('mouseout', function(){
-            if(state==='off')return;
-            state = 'off';
-            $self.stop().animate({'width': $words.eq(0).width()},1000);
-            $words.stop().fadeOut().eq(0).fadeIn().delay(1000).show();
-          });
-        })*/
+        var first = true;
+        text.children().each(function(index){
+          if(!first)textbody.append($('<div class="info-container-buffer">'));
+          first = false;
+          linebalancers.push(new mrchan.utils.lineBalancer(textbody, $(this)));
+        })
       });
     }
     this.displace.push(filename);
@@ -86,15 +68,15 @@ function InfoPanel() {
   }
 
   this.scaleElems = function() {
-    this.viewport.selectAll("h1")
-      .style('font-size', this.porps.height*this.titleHeight+'px');
-    this.viewport.selectAll("p")
-      .style('font-size', this.porps.height*this.bodyHeight+'px');
+    _.each(this.linebalancers, function(balancer){
+      balancer.scale();
+    })
   }
 
   this.reveal = function(id) {
     this.viewport
       .style('top', this.porps.height*.15+20+'px')
+      //.style('display', 'block')
       .node().scrollTop = this.displace.indexOf(id) * this.dispHeight;
     this.viewport.transition()
       .duration(200)
@@ -107,7 +89,8 @@ function InfoPanel() {
     this.viewport.transition()
       .duration(200)
       .ease(d3.easeCubicInOut)
-      .style('opacity', 0);
+      .style('opacity', 0)
+      //.style('display', 'none');
   }
 
   this.changeTo = function(id) {

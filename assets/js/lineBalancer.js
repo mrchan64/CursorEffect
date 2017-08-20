@@ -16,7 +16,8 @@ function lineBalancer(parent, paraelem) {
   var data = this.data = clone.prop('outerHTML');
 
   var maxwidth = this.maxwidth = this.parent.width();
-  var fontsize = this.fontsize = mrchan.storage.InfoPanel.porps.height*mrchan.storage.InfoPanel.bodyHeight;
+  var fontsize = this.fontsize = this.dataObj.is('h1') ? mrchan.storage.InfoPanel.porps.height*mrchan.storage.InfoPanel.titleHeight : mrchan.storage.InfoPanel.porps.height*mrchan.storage.InfoPanel.bodyHeight;
+  var fontfam = this.fontfam = this.dataObj.is('h1') ? "Century Gothic" : "Arial";
 
   var paracont = $('<div class="balance-parent"/>');
   paracont.append(paraelem);
@@ -24,10 +25,11 @@ function lineBalancer(parent, paraelem) {
   if(this.bal.length == 0){
     bal = this.bal = $('<div/>');
     bal.attr('id', 'balance-tester');
-    bal.css('font-size', mrchan.storage.InfoPanel.porps.height*mrchan.storage.InfoPanel.bodyHeight+'px');
     mrchan.storage.$body.append(this.bal);
   }
 
+  bal.css('font-size', fontsize+'px');
+  bal.css('font-family', fontfam);
   bal.html('&nbsp;');
   var whitespace = bal.width();
 
@@ -80,7 +82,7 @@ function lineBalancer(parent, paraelem) {
     if(endword){
       metaData.push({
         'word': currentString,
-        'bold': isBold,
+        'bold': this.dataObj.is('h1') ? true : isBold,
         'identifier': identifier,
         'hidden': isHidden
       })
@@ -91,6 +93,8 @@ function lineBalancer(parent, paraelem) {
   this.dataObj.find('[data-words]')
 
   var findSubset = this.findSubset = function(words) {
+    bal.css('font-size', fontsize+'px');
+    bal.css('font-family', fontfam);
     var totalString = "";
     var arr = [];
     var width = 0;
@@ -149,10 +153,9 @@ function lineBalancer(parent, paraelem) {
     }
   }
 
-  var madeDivs = [];
-  var madeParas = [];
+  var madeDivs = this.madeDivs = [];
 
-  var hidespans = {};
+  var hidespans = this.hidespans = {};
 
   var restructure = function(identifier){
     divHandlers = [];
@@ -168,8 +171,10 @@ function lineBalancer(parent, paraelem) {
         var para = paraelem.clone()
         cont.append(para);
         para.css('font-size', fontsize+'px');
-        parent.append(cont);
+        madeDivs[key-1].cont.after(cont);
         madeDivs.push({'cont': cont,'elem':para});
+        madeDivs[key].cont.css({'height': 0, 'width': 0});
+        madeDivs[key].elem.css('left', '-100%');
         para.find("[data-words]").attr("data-words", function(i,d){
           var $self = $(this),
               $words = d.split("|"),
@@ -203,15 +208,16 @@ function lineBalancer(parent, paraelem) {
         });
       }
       madeDivs[key].cont.stop();
-      madeDivs[key].cont.animate({'width': handler.width}, 250);
+      madeDivs[key].cont.animate({'width': handler.width, 'height': fontsize*1.5}, 250);
       madeDivs[key].elem.stop();
-      madeDivs[key].elem.animate({'left': -continuity}, 250);
+      madeDivs[key].elem.animate({'left': -continuity, 'font-size': fontsize}, 250);
       continuity+=handler.width+whitespace;
       counter++;
     })
     for(; counter<madeDivs.length; counter++){
       madeDivs[counter].cont.stop();
       madeDivs[counter].cont.animate({'width': 0}, 250);
+      madeDivs[counter].cont.delay(100).animate({'height': 0}, 250);
       madeDivs[counter].elem.stop();
       madeDivs[counter].elem.animate({'left': -continuity}, 250);
     }
@@ -263,10 +269,31 @@ function lineBalancer(parent, paraelem) {
       });
     }
   }
-  console.log(divHandlers)
 
   initialConstruct();
+  var that = this;
 
+  this.scale = function() {
+    //restructure, madedivs width, height, font-size wait that might just be delayed restructure
+    maxwidth = this.maxwidth = this.parent.width();
+    fontsize = this.fontsize = this.dataObj.is('h1') ? mrchan.storage.InfoPanel.porps.height*mrchan.storage.InfoPanel.titleHeight : mrchan.storage.InfoPanel.porps.height*mrchan.storage.InfoPanel.bodyHeight;
+    bal.css('font-size', fontsize+'px');
+    bal.css('font-family', fontfam);
+    bal.html('&nbsp;');
+    whitespace = bal.width();
+    if(this.scaletimeout)clearTimeout(this.scaletimeout);
+    this.scaletimeout = setTimeout(function(){
+      restructure();
+      _.each(hidespans, function(item){
+        _.each(item.wordsets, function(item){
+          bal.css('font-size', fontsize+'px');
+          bal.css('font-family', fontfam);
+          bal.html('<b>'+item.$words.eq(0).html()+'</b>');
+          item.$self.css({'width': bal.width(), 'height': bal.height()});
+        })
+      })
+    }, 200)
+  }
 }
 
 mrchan.utils.lineBalancer = lineBalancer;
