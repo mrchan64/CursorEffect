@@ -10,6 +10,7 @@ function InfoPanel() {
     this.boxWidth = (1-mrchan.config.directory.boxWidth)*.8;
     this.displace = [];
     this.linebalancers = [];
+    this.loading = 0;
     this.addInfo('about');
     this.addInfo('resume');
     this.addInfo('lang');
@@ -39,6 +40,7 @@ function InfoPanel() {
   }
 
   this.addInfo = function(filename) {
+    this.loading++;
     if(this.displace.length !== 0){
       this.viewport.append('div')
         .classed('buffer', true)
@@ -52,6 +54,7 @@ function InfoPanel() {
       var scale = this.scaleElems.bind(this);
       var linebalancers = this.linebalancers;
       var viewport = this.viewport;
+      var that = this;
       grouping.load('assets/htm/'+filename+'.htm', function(){
         viewport.style('display', 'block');
         var text = grouping.find('.info-container-child');
@@ -64,6 +67,8 @@ function InfoPanel() {
           linebalancers.push(new mrchan.utils.lineBalancer(textbody, $(this)));
         })
         viewport.style('display', 'none');
+        that.loading--;
+        console.log(that.loading);
       });
     }
     this.displace.push(filename);
@@ -73,6 +78,22 @@ function InfoPanel() {
   this.scaleElems = function() {
     _.each(this.linebalancers, function(balancer){
       balancer.scale();
+    })
+    console.log(this.loading)
+    if(this.loading!=0)return;
+    this.viewport.selectAll(".info-container-item").each(function(d, i){
+      var height = 0;
+      that = d3.select(this);
+      var maxheight = that.select(".info-container-child").node().getBoundingClientRect().height;
+      _.each(that.select(".info-container-child").node().childNodes, function(d, i){
+        console.log(this);
+        height += this.getBoundingClientRect().height;
+      });
+      console.log(height)
+      var top = (maxheight - height)/2;
+      that.select(".info-container-child")
+        .style('height', height+'px')
+        .style('top', top+'px');
     })
   }
 

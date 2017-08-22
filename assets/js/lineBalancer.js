@@ -190,7 +190,7 @@ function lineBalancer(parent, paraelem) {
           }
           hidespans[id].wordsets.push({'$self': $self, '$words': $words});
           $self.on('mouseover', function(){
-            if(hidespans[id].state==='on')return;
+            if(!mrchan.config.tooltips || hidespans[id].state==='on')return;
             hidespans[id].state = 'on';
             restructure(id);
             _.each(hidespans[id].wordsets, function(item){
@@ -198,7 +198,7 @@ function lineBalancer(parent, paraelem) {
             });
           });
           $self.on('mouseout', function(){
-            if(hidespans[id].state==='off')return;
+            if(!mrchan.config.tooltips || hidespans[id].state==='off')return;
             hidespans[id].state = 'off';
             restructure(id);
             _.each(hidespans[id].wordsets, function(item){
@@ -251,7 +251,7 @@ function lineBalancer(parent, paraelem) {
         }
         hidespans[id].wordsets.push({'$self': $self, '$words': $words});
         $self.on('mouseover', function(){
-          if(hidespans[id].state==='on')return;
+          if(!mrchan.config.tooltips || hidespans[id].state==='on')return;
           hidespans[id].state = 'on';
           restructure(id);
           _.each(hidespans[id].wordsets, function(item){
@@ -259,7 +259,7 @@ function lineBalancer(parent, paraelem) {
           });
         });
         $self.on('mouseout', function(){
-          if(hidespans[id].state==='off')return;
+          if(!mrchan.config.tooltips || hidespans[id].state==='off')return;
           hidespans[id].state = 'off';
           restructure(id);
           _.each(hidespans[id].wordsets, function(item){

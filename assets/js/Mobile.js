@@ -7,6 +7,10 @@ function Mobile() {
       var lowspec = cookie.substring(start+('lowspec').length+1,start+('lowspec').length+2);
       mrchan.config.lowspec = lowspec==='y';
     }
+    if(-1 !== (start = cookie.indexOf('tooltips'))){
+      var tooltips = cookie.substring(start+('tooltips').length+1,start+('tooltips').length+2);
+      mrchan.config.tooltips = tooltips==='y';
+    }
     this.scale();
   }
 

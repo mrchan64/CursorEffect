@@ -113,7 +113,7 @@ function DotView() {
     var linefield = this.linefield = plane.append('g');
     var dotsHoriz = Math.floor(porps.width * this.density);
     var dotsVert = Math.floor(porps.height * this.density);
-    plane.on('mousemove',this.movement.bind(this));
+    this.body.on('mousemove',this.movement.bind(this));
     for(var i = 0; i<dotsHoriz*dotsVert && i<mrchan.config.stars.maxStars; i++){
       var x = Math.random()*porps.width;
       var y = Math.random()*porps.height;

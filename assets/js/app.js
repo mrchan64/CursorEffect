@@ -33,6 +33,7 @@ mrchan.config.directory.linePos = 1.5;
 mrchan.config.inform = {};
 mrchan.config.inform.titleHeight = .025;
 mrchan.config.inform.bodyHeight = .02;
+mrchan.config.inform.tooltips = true;
 
 mrchan.transitions = {};
 mrchan.transitions.fadeIn = d3.transition()
