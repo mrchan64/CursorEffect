@@ -8,6 +8,7 @@ function InfoPanel() {
     this.titleHeight = mrchan.config.inform.titleHeight;
     this.bodyHeight = mrchan.config.inform.bodyHeight;
     this.boxWidth = (1-mrchan.config.directory.boxWidth)*.8;
+    this.topRatio = mrchan.config.inform.topRatio;
     this.displace = [];
     this.linebalancers = [];
     this.loading = 0;
@@ -66,9 +67,9 @@ function InfoPanel() {
           first = false;
           linebalancers.push(new mrchan.utils.lineBalancer(textbody, $(this)));
         })
-        viewport.style('display', 'none');
         that.loading--;
-        console.log(that.loading);
+        that.scaleElems();
+        viewport.style('display', 'none');
       });
     }
     this.displace.push(filename);
@@ -76,25 +77,27 @@ function InfoPanel() {
   }
 
   this.scaleElems = function() {
+    if(this.loading!=0)return;
+    var disp = this.viewport.style('display');
+    this.viewport.style('display', 'block');
     _.each(this.linebalancers, function(balancer){
       balancer.scale();
     })
-    console.log(this.loading)
-    if(this.loading!=0)return;
+    var topRatio = this.topRatio;
     this.viewport.selectAll(".info-container-item").each(function(d, i){
       var height = 0;
       that = d3.select(this);
-      var maxheight = that.select(".info-container-child").node().getBoundingClientRect().height;
-      _.each(that.select(".info-container-child").node().childNodes, function(d, i){
-        console.log(this);
-        height += this.getBoundingClientRect().height;
+      var maxheight = this.getBoundingClientRect().height;
+      _.each(that.select(".info-container-child").node().childNodes, function(div){
+        height += div.getBoundingClientRect().height;
+        console.log(div.getBoundingClientRect().height, height)
       });
-      console.log(height)
-      var top = (maxheight - height)/2;
+      var top = (maxheight - height)*topRatio;
       that.select(".info-container-child")
         .style('height', height+'px')
         .style('top', top+'px');
-    })
+    });
+    this.viewport.style('display', disp);
   }
 
   this.reveal = function(id) {
