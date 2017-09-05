@@ -89,8 +89,9 @@ function InfoPanel() {
       that = d3.select(this);
       var maxheight = this.getBoundingClientRect().height;
       _.each(that.select(".info-container-child").node().childNodes, function(div){
-        height += div.getBoundingClientRect().height;
-        console.log(div.getBoundingClientRect().height, height)
+        var div = $(div);
+        if(div.hasClass('info-container-buffer'))height += maxheight*.03;
+        else height += parseInt(div.children().first().css('font-size').replace('px',''))*1.5;
       });
       var top = (maxheight - height)*topRatio;
       that.select(".info-container-child")

@@ -292,7 +292,7 @@ function lineBalancer(parent, paraelem) {
           item.$self.css({'width': bal.width(), 'height': bal.height()});
         })
       })
-    }, 200)
+    }, 100)
   }
 }
 

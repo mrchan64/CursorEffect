@@ -35,6 +35,10 @@ mrchan.config.inform.titleHeight = .025;
 mrchan.config.inform.bodyHeight = .02;
 mrchan.config.inform.tooltips = true;
 mrchan.config.inform.topRatio = .4;
+mrchan.config.label = {};
+mrchan.config.label.heightRatio = .25;
+mrchan.config.label.maxWidth = .45;
+mrchan.config.label.widthToHeight = 1400/500;
 
 mrchan.transitions = {};
 mrchan.transitions.fadeIn = d3.transition()

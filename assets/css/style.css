@@ -16,12 +16,14 @@ body {
   overflow: hidden;
   position: absolute;
   background-color: #222222;
+  filter: drop-shadow( 2px 2px 2px #000 );
 }
 
 ::-webkit-scrollbar {
     display: none;
 }
 
+/* Stars */
 #plane {
   position: absolute;
 }
@@ -59,6 +61,7 @@ body {
   opacity: 0;
 }
 
+/* Basic clickable div stuff */
 .basic-label {
   -webkit-user-select: none; /* Chrome/Safari */        
   -moz-user-select: none; /* Firefox */
@@ -73,6 +76,7 @@ body {
   cursor: pointer;
 }
 
+/* Name title */
 #name-capsule {
   z-index: 9;
 }
@@ -92,6 +96,7 @@ body {
   fill: none;
 }
 
+/* Context Menu */
 #context-menu {
   height: 0px;
   width: 0px;
@@ -106,7 +111,7 @@ body {
   font-family: "Arial";
   overflow: hidden;
   border-bottom: 1px solid #777777;
-  background-color: rgba(34, 34, 34, 1);
+  background-color: rgba(34, 34, 34, .5);
   color: #777777;
 }
 .context-item:hover{
@@ -125,6 +130,7 @@ body {
   white-space: nowrap;
 }
 
+/* Selection Menu */
 #directory-container {
   position: relative;
   height: 100%;
@@ -166,6 +172,7 @@ body {
   stroke: #dddddd;
 }
 
+/* Content Containers */
 #info-container {
   -webkit-mask-image: linear-gradient(transparent 0%, black 3%, black 97%, transparent 100%);
   position: absolute;
@@ -260,4 +267,27 @@ body {
   margin: 0 0;
   white-space: nowrap;
   width: auto;
+}
+
+/* Content Labels */
+#info-label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 50%;
+  opacity: 0;
+  display: none;
+  overflow: hidden;
+}
+
+#info-label-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.info-label-img {
+  position: absolute;
+  right: 0;
+  top: 50px;
 }
