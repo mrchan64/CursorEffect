@@ -7,10 +7,10 @@ function InfoLabel() {
       .attr('id', 'info-label');
     this.boxWidth = (1-mrchan.config.directory.boxWidth)*.8;
     this.addInfo('about');
-    // this.addInfo('resume');
-    // this.addInfo('lang');
-    // this.addInfo('project');
-    // this.addInfo('interest');
+    this.addInfo('resume');
+    this.addInfo('lang');
+    this.addInfo('project');
+    this.addInfo('interest');
     this.scale();
   }
 
@@ -37,26 +37,35 @@ function InfoLabel() {
   this.reveal = function(id) {
     this.labeler
       .style('display', 'block')
-    this.labeler.find('#'+id+'-splatter-img')
+      .style('opacity', 1);
+    this.changeTo(id, 200);
   }
 
   this.hide = function() {
-    this.viewport.transition()
+    this.labeler
+      .transition()
       .duration(200)
       .ease(d3.easeCubicInOut)
-      .style('opacity', 0)
-      .style('display', 'none');
+      .style('opacity', 0);
+    var labeler = this.labeler;
+    setTimeout(function(){labeler.style('display', 'none');labeler.select('.activelabel').classed('activelabel', false).style('opacity', 0);},200);
   }
 
-  this.changeTo = function(id) {
-    var start = this.viewport.node().scrollTop;
-    var end = this.displace.indexOf(id) * this.dispHeight;
-    var i = d3.interpolateNumber(start, end);
-    var viewport = this.viewport;
-    var tw = function(t){viewport.node().scrollTop = i(t)};
-    this.viewport.transition()
-      .duration(500)
-      .tween('scrollingtween', function(){return tw});
+  this.changeTo = function(id, timing) {
+    this.labeler.select('.activelabel')
+      .classed('activelabel', false)
+      .transition()
+      .duration(250)
+      .style('opacity', 0);
+    var porps = this.labeler.node().getBoundingClientRect();
+    this.labeler.select('#'+id+'-splatter-img')
+      .classed('activelabel', true)
+      .style('left', porps.width+'px')
+      .style('opacity', 1)
+      .transition()
+      .duration(timing || 500)
+      .ease(d3.easeCubicInOut)
+      .style('left', '0px');
   }
 
 }

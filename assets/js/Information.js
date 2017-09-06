@@ -111,6 +111,7 @@ function InfoPanel() {
       .ease(d3.easeCubicInOut)
       .style('opacity', 1)
       .style('top', this.porps.height*.15+'px');
+    mrchan.storage.InfoLabel.reveal(id);
   }
 
   this.hide = function() {
@@ -118,7 +119,9 @@ function InfoPanel() {
       .duration(200)
       .ease(d3.easeCubicInOut)
       .style('opacity', 0)
-      .style('display', 'none');
+    mrchan.storage.InfoLabel.hide();
+    var viewport = this.viewport;
+    setTimeout(function(){viewport.style('display', 'none');},200);
   }
 
   this.changeTo = function(id) {
@@ -130,6 +133,7 @@ function InfoPanel() {
     this.viewport.transition()
       .duration(500)
       .tween('scrollingtween', function(){return tw});
+    mrchan.storage.InfoLabel.changeTo(id);
   }
 
 }
