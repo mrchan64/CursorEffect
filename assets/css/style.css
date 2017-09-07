@@ -16,6 +16,10 @@ body {
   overflow: hidden;
   position: absolute;
   background-color: #222222;
+  background-image: url("https://images5.alphacoders.com/345/345584.jpg");
+  background-size: cover;
+  background-position: center;
+  
 }
 
 ::-webkit-scrollbar {
