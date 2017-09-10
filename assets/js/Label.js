@@ -27,6 +27,24 @@ function InfoLabel() {
       .style('width', width);
   }
 
+  this.scaleLabels = function() {
+    var viewport = mrchan.storage.InfoPanel.viewport;
+    var disp = viewport.style('display');
+    viewport.style('display', 'block');
+    this.labeler.style('display', 'block');
+    this.labeler.selectAll('.info-label-img').each(function(){
+      if(!this)return;
+      var img = d3.select(this);
+      var info = viewport.select('#'+img.attr('id').replace('-splatter-img', '')+'-info');
+      var lowerbound = info.node().getBoundingClientRect().top-info.node().parentNode.offsetTop+Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px','')));
+      var actualtop = lowerbound-img.node().getBoundingClientRect().height*mrchan.config.label.percentUncovered;
+      console.log(info.node().getBoundingClientRect().top, Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px',''))))
+      img.style('top', actualtop+'px');
+    });
+    viewport.style('display', disp);
+    this.labeler.style('display', disp);
+  }
+
   this.addInfo = function(filename) {
     this.labeler.append('img')
       .classed('info-label-img', true)
@@ -35,6 +53,7 @@ function InfoLabel() {
   }
 
   this.reveal = function(id) {
+    this.scaleLabels();
     this.labeler
       .style('display', 'block')
       .style('opacity', 1);

@@ -60,6 +60,7 @@ function InfoPanel() {
         viewport.style('display', 'block');
         var text = grouping.find('.info-container-child');
         var textbody = $('<div class="info-container-child"/>');
+        textbody.attr('id', filename+'-info');
         cont.node().appendChild(textbody.get(0));
         var first = true;
         text.children().each(function(index){
@@ -98,10 +99,12 @@ function InfoPanel() {
         .style('height', height+'px')
         .style('top', top+'px');
     });
+    mrchan.storage.InfoLabel.scaleLabels();
     this.viewport.style('display', disp);
   }
 
   this.reveal = function(id) {
+    mrchan.storage.InfoLabel.reveal(id);
     this.viewport
       .style('top', this.porps.height*.15+20+'px')
       .style('display', 'block')
@@ -111,7 +114,6 @@ function InfoPanel() {
       .ease(d3.easeCubicInOut)
       .style('opacity', 1)
       .style('top', this.porps.height*.15+'px');
-    mrchan.storage.InfoLabel.reveal(id);
   }
 
   this.hide = function() {

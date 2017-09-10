@@ -39,6 +39,7 @@ mrchan.config.label = {};
 mrchan.config.label.heightRatio = .25;
 mrchan.config.label.maxWidth = .45;
 mrchan.config.label.widthToHeight = 1400/500;
+mrchan.config.label.percentUncovered = .7;
 
 mrchan.transitions = {};
 mrchan.transitions.fadeIn = d3.transition()
