@@ -99,8 +99,8 @@ function InfoPanel() {
       var maxheight = this.getBoundingClientRect().height;
       _.each(that.select(".info-container-child").node().childNodes, function(div){
         var div = $(div);
-        if(div.hasClass('info-container-buffer'))height += maxheight*.03;
-        else height += parseInt(div.children().first().css('font-size').replace('px',''))*1.5;
+        if(div.hasClass('info-container-buffer'))height += Math.round(maxheight*.03);
+        else height += ((Math.round(parseInt(div.attr('high'))+1) || (div.height())+1))-1;
       });
       var top = (maxheight - height)*topRatio;
       that.select(".info-container-child")
@@ -110,7 +110,6 @@ function InfoPanel() {
     this.viewport.node().scrollTop = this.displace.indexOf(this.chosenOne) * this.dispHeight;
     mrchan.storage.InfoLabel.scaleLabels();
     this.viewport.style('display', disp);
-    console.log('scaled')
   }
 
   this.reveal = function(id) {

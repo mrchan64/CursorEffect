@@ -174,6 +174,7 @@ function lineBalancer(parent, paraelem) {
         madeDivs[key-1].cont.after(cont);
         madeDivs.push({'cont': cont,'elem':para});
         madeDivs[key].cont.css({'height': 0, 'width': 0});
+        madeDivs[key].cont.attr('high', 0);
         madeDivs[key].elem.css('left', '-100%');
         para.find("[data-words]").attr("data-words", function(i,d){
           var $self = $(this),
@@ -209,6 +210,7 @@ function lineBalancer(parent, paraelem) {
       }
       madeDivs[key].cont.stop();
       madeDivs[key].cont.animate({'width': handler.width, 'height': fontsize*1.5}, 250);
+      madeDivs[counter].cont.attr({'high': fontsize*1.5});
       madeDivs[key].elem.stop();
       madeDivs[key].elem.animate({'left': -continuity, 'font-size': fontsize}, 250);
       continuity+=handler.width+whitespace;
@@ -218,6 +220,7 @@ function lineBalancer(parent, paraelem) {
       madeDivs[counter].cont.stop();
       madeDivs[counter].cont.animate({'width': 0}, 250);
       madeDivs[counter].cont.delay(100).animate({'height': 0}, 250);
+      madeDivs[counter].cont.attr({'high': 0});
       madeDivs[counter].elem.stop();
       madeDivs[counter].elem.animate({'left': -continuity}, 250);
     }
@@ -281,8 +284,8 @@ function lineBalancer(parent, paraelem) {
     bal.css('font-family', fontfam);
     bal.html('&nbsp;');
     whitespace = bal.width();
-    if(this.scaletimeout)clearTimeout(this.scaletimeout);
-    this.scaletimeout = setTimeout(function(){
+    //if(this.scaletimeout)clearTimeout(this.scaletimeout);
+    //this.scaletimeout = setTimeout(function(){
       restructure();
       _.each(hidespans, function(item){
         _.each(item.wordsets, function(item){
@@ -292,7 +295,7 @@ function lineBalancer(parent, paraelem) {
           item.$self.css({'width': bal.width(), 'height': bal.height()});
         })
       })
-    }, 100)
+    //}, 100)
   }
 }
 

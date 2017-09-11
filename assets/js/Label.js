@@ -11,6 +11,7 @@ function InfoLabel() {
     this.addInfo('lang');
     this.addInfo('project');
     this.addInfo('interest');
+    this.positions = {};
     this.scale();
   }
 
@@ -28,6 +29,7 @@ function InfoLabel() {
   }
 
   this.scaleLabels = function() {
+    var positions = this.positions;
     var viewport = mrchan.storage.InfoPanel.viewport;
     var disp = viewport.style('display');
     viewport.style('display', 'block');
@@ -35,10 +37,14 @@ function InfoLabel() {
     this.labeler.selectAll('.info-label-img').each(function(){
       if(!this)return;
       var img = d3.select(this);
-      var info = viewport.select('#'+img.attr('id').replace('-splatter-img', '')+'-info');
+      var id = img.attr('id').replace('-splatter-img', '');
+      var info = viewport.select('#'+id+'-info');
       var lowerbound = info.node().getBoundingClientRect().top-info.node().parentNode.offsetTop+Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px','')))+viewport.node().scrollTop;
-      var actualtop = lowerbound-img.node().getBoundingClientRect().height*mrchan.config.label.percentUncovered;
-      img.style('top', actualtop+'px');
+      positions[id] = {
+        unshiftedTop: lowerbound-img.node().getBoundingClientRect().height*mrchan.config.label.percentUncovered,
+        shiftedTop: lowerbound-img.node().getBoundingClientRect().height
+      }
+      img.style('top', positions[id].unshiftedTop+'px');
     });
     viewport.style('display', disp);
     this.labeler.style('display', disp);
@@ -52,27 +58,19 @@ function InfoLabel() {
   }
 
   this.shiftLabel = function(id) {
-    var viewport = mrchan.storage.InfoPanel.viewport;
     var img = this.labeler.select('#'+id+'-splatter-img');
-    var info = mrchan.storage.InfoPanel.viewport.select('#'+img.attr('id').replace('-splatter-img', '')+'-info');
-      var lowerbound = info.node().getBoundingClientRect().top-info.node().parentNode.offsetTop+Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px','')))+viewport.node().scrollTop;
-      var actualtop = lowerbound-img.node().getBoundingClientRect().height;
-    img.transition()
+    img.transition("shift")
       .duration(200)
       .ease(d3.easeCubicInOut)
-      .style('top', actualtop+'px');
+      .style('top', this.positions[id].shiftedTop+'px');
   }
 
   this.unshiftLabel = function(id) {
-    var viewport = mrchan.storage.InfoPanel.viewport;
     var img = this.labeler.select('#'+id+'-splatter-img');
-    var info = mrchan.storage.InfoPanel.viewport.select('#'+img.attr('id').replace('-splatter-img', '')+'-info');
-      var lowerbound = info.node().getBoundingClientRect().top-info.node().parentNode.offsetTop+Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px','')))+viewport.node().scrollTop;
-      var actualtop = lowerbound-img.node().getBoundingClientRect().height*mrchan.config.label.percentUncovered;
-    img.transition()
+    img.transition("shift")
       .duration(200)
       .ease(d3.easeCubicInOut)
-      .style('top', actualtop+'px');
+      .style('top', this.positions[id].unshiftedTop+'px');
   }
 
   this.reveal = function(id) {
