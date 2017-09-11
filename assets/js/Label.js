@@ -36,9 +36,8 @@ function InfoLabel() {
       if(!this)return;
       var img = d3.select(this);
       var info = viewport.select('#'+img.attr('id').replace('-splatter-img', '')+'-info');
-      var lowerbound = info.node().getBoundingClientRect().top-info.node().parentNode.offsetTop+Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px','')));
+      var lowerbound = info.node().getBoundingClientRect().top-info.node().parentNode.offsetTop+Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px','')))+viewport.node().scrollTop;
       var actualtop = lowerbound-img.node().getBoundingClientRect().height*mrchan.config.label.percentUncovered;
-      console.log(info.node().getBoundingClientRect().top, Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px',''))))
       img.style('top', actualtop+'px');
     });
     viewport.style('display', disp);
@@ -50,6 +49,30 @@ function InfoLabel() {
       .classed('info-label-img', true)
       .attr('id', filename+'-splatter-img')
       .attr('src', '/assets/img/'+filename+'-splatter.png');
+  }
+
+  this.shiftLabel = function(id) {
+    var viewport = mrchan.storage.InfoPanel.viewport;
+    var img = this.labeler.select('#'+id+'-splatter-img');
+    var info = mrchan.storage.InfoPanel.viewport.select('#'+img.attr('id').replace('-splatter-img', '')+'-info');
+      var lowerbound = info.node().getBoundingClientRect().top-info.node().parentNode.offsetTop+Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px','')))+viewport.node().scrollTop;
+      var actualtop = lowerbound-img.node().getBoundingClientRect().height;
+    img.transition()
+      .duration(200)
+      .ease(d3.easeCubicInOut)
+      .style('top', actualtop+'px');
+  }
+
+  this.unshiftLabel = function(id) {
+    var viewport = mrchan.storage.InfoPanel.viewport;
+    var img = this.labeler.select('#'+id+'-splatter-img');
+    var info = mrchan.storage.InfoPanel.viewport.select('#'+img.attr('id').replace('-splatter-img', '')+'-info');
+      var lowerbound = info.node().getBoundingClientRect().top-info.node().parentNode.offsetTop+Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px','')))+viewport.node().scrollTop;
+      var actualtop = lowerbound-img.node().getBoundingClientRect().height*mrchan.config.label.percentUncovered;
+    img.transition()
+      .duration(200)
+      .ease(d3.easeCubicInOut)
+      .style('top', actualtop+'px');
   }
 
   this.reveal = function(id) {

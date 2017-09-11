@@ -16,9 +16,9 @@ body {
   overflow: hidden;
   position: absolute;
   background-color: #222222;
-  background-image: url("https://images5.alphacoders.com/345/345584.jpg");
+  /*background-image: url("https://images5.alphacoders.com/345/345584.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: center;*/
   
 }
 
@@ -204,6 +204,7 @@ body {
   top: 5%;
   width: 85%;
   height: 90%;
+  pointer-events: all;
 }
 
 .info-container-child h1 {
@@ -257,6 +258,7 @@ body {
   margin-right: 0;
   height: auto;
   overflow-x: hidden;
+  pointer-events: none;
 }
 
 .balance-div p {

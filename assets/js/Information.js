@@ -68,6 +68,14 @@ function InfoPanel() {
           first = false;
           linebalancers.push(new mrchan.utils.lineBalancer(textbody, $(this)));
         })
+        var checkMouseOut = function(event){
+          var porps = textbody.get(0).getBoundingClientRect();
+          if(event.clientX<=porps.left || event.clientX>=porps.left+porps.width)textbody.attr('hov', null);
+          if(event.clientY<=porps.top || event.clientY>=porps.top+porps.height)textbody.attr('hov', null);
+          return !textbody.attr('hov');
+        }
+        textbody.on('mouseover', function(){if(textbody.attr('hov'))return;textbody.attr('hov', true);mrchan.storage.InfoLabel.shiftLabel(filename)});
+        textbody.on('mouseout', function(event){if(!checkMouseOut(event))return;mrchan.storage.InfoLabel.unshiftLabel(filename)});
         that.loading--;
         that.scaleElems();
         viewport.style('display', 'none');
@@ -99,12 +107,15 @@ function InfoPanel() {
         .style('height', height+'px')
         .style('top', top+'px');
     });
+    this.viewport.node().scrollTop = this.displace.indexOf(this.chosenOne) * this.dispHeight;
     mrchan.storage.InfoLabel.scaleLabels();
     this.viewport.style('display', disp);
+    console.log('scaled')
   }
 
   this.reveal = function(id) {
     mrchan.storage.InfoLabel.reveal(id);
+    this.chosenOne = id;
     this.viewport
       .style('top', this.porps.height*.15+20+'px')
       .style('display', 'block')
@@ -117,6 +128,7 @@ function InfoPanel() {
   }
 
   this.hide = function() {
+    this.chosenOne = null;
     this.viewport.transition()
       .duration(200)
       .ease(d3.easeCubicInOut)
@@ -127,6 +139,7 @@ function InfoPanel() {
   }
 
   this.changeTo = function(id) {
+    this.chosenOne = id;
     var start = this.viewport.node().scrollTop;
     var end = this.displace.indexOf(id) * this.dispHeight;
     var i = d3.interpolateNumber(start, end);
