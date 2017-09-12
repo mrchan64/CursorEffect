@@ -42,7 +42,7 @@ function InfoLabel() {
       var lowerbound = info.node().getBoundingClientRect().top-info.node().parentNode.offsetTop+Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px','')))+viewport.node().scrollTop;
       positions[id] = {
         unshiftedTop: lowerbound-img.node().getBoundingClientRect().height*mrchan.config.label.percentUncovered,
-        shiftedTop: lowerbound-img.node().getBoundingClientRect().height
+        shiftedTop: lowerbound-img.node().getBoundingClientRect().height*(1-(1-mrchan.config.label.percentUncovered)/2)
       }
       img.style('top', positions[id].unshiftedTop+'px');
     });
