@@ -10,7 +10,7 @@ function InfoPanel() {
     this.boxWidth = (1-mrchan.config.directory.boxWidth)*.8;
     this.topRatio = mrchan.config.inform.topRatio;
     this.displace = [];
-    this.linebalancers = [];
+    this.balancers = [];
     this.loading = 0;
     this.addInfo('about');
     this.addInfo('resume');
@@ -53,7 +53,7 @@ function InfoPanel() {
     if(filename){
       var grouping = $('<div/>');
       var scale = this.scaleElems.bind(this);
-      var linebalancers = this.linebalancers;
+      var balancers = this.balancers;
       var viewport = this.viewport;
       var that = this;
       grouping.load('assets/htm/'+filename+'.htm', function(){
@@ -66,7 +66,10 @@ function InfoPanel() {
         text.children().each(function(index){
           if(!first)textbody.append($('<div class="info-container-buffer">'));
           first = false;
-          linebalancers.push(new mrchan.utils.lineBalancer(textbody, $(this)));
+          if(['H1', 'P'].indexOf($(this).prop('tagName'))!==-1)
+            balancers.push(new mrchan.utils.lineBalancer(textbody, $(this)));
+          else
+            balancers.push(new mrchan.utils.blockBalancer(textbody, $(this)));
         })
         var checkMouseOut = function(event){
           var porps = textbody.get(0).getBoundingClientRect();
@@ -89,7 +92,7 @@ function InfoPanel() {
     if(this.loading!=0)return;
     var disp = this.viewport.style('display');
     this.viewport.style('display', 'block');
-    _.each(this.linebalancers, function(balancer){
+    _.each(this.balancers, function(balancer){
       balancer.scale();
     })
     var topRatio = this.topRatio;

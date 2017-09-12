@@ -117,6 +117,7 @@ body {
   border-bottom: 1px solid #777777;
   background-color: rgba(34, 34, 34, .5);
   color: #777777;
+  white-space: nowrap;
 }
 .context-item:hover{
   background-color: rgba(20, 20, 20, 1);
@@ -275,6 +276,14 @@ body {
   margin: 0 0;
   white-space: nowrap;
   width: auto;
+}
+
+.block-div {
+  position: relative;
+  width: 90%;
+  margin-right: 1%;
+  height: auto;
+  pointer-events: none;
 }
 
 /* Content Labels */
