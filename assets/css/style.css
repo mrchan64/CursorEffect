@@ -235,7 +235,7 @@ body {
   display: inline-block;
 }
 [data-words] > span{
-  font-weight: bold;
+  /*font-weight: bold;*/
   pointer-events: none;
   left: 0;
   position: absolute;

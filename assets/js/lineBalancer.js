@@ -49,7 +49,7 @@ function lineBalancer(parent, paraelem) {
       str = data[i]+str;
     }
   }
-
+console.log(this.data)
   for(var i = 0; i<length; i++){
     var char = this.data[i];
     var endword = false;
@@ -61,7 +61,7 @@ function lineBalancer(parent, paraelem) {
         var tag = findIdInFakeTag(i);
         if(tag[0]!='/'){
           identifier = tag;
-          isBold=true;
+          isBold=false;
         }else{
           identifier = '';
           isHidden = false;
@@ -210,9 +210,10 @@ function lineBalancer(parent, paraelem) {
       }
       madeDivs[key].cont.stop();
       madeDivs[key].cont.animate({'width': handler.width, 'height': fontsize*1.5}, 250);
-      madeDivs[counter].cont.attr({'high': fontsize*1.5});
+      madeDivs[key].cont.attr({'high': fontsize*1.5});
       madeDivs[key].elem.stop();
       madeDivs[key].elem.animate({'left': -continuity, 'font-size': fontsize}, 250);
+      madeDivs[key].elem.find('.tooltip').css('pointer-events', '');
       continuity+=handler.width+whitespace;
       counter++;
     })
@@ -223,6 +224,7 @@ function lineBalancer(parent, paraelem) {
       madeDivs[counter].cont.attr({'high': 0});
       madeDivs[counter].elem.stop();
       madeDivs[counter].elem.animate({'left': -continuity}, 250);
+      madeDivs[counter].elem.find('.tooltip').css('pointer-events', 'none');
     }
   }
 

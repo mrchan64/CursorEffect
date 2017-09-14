@@ -64,6 +64,7 @@ function InfoPanel() {
         cont.node().appendChild(textbody.get(0));
         var first = true;
         text.children().each(function(index){
+          if($(this).attr('spacing')==='none')first=true;
           if(!first)textbody.append($('<div class="info-container-buffer">'));
           first = false;
           if(['H1', 'P'].indexOf($(this).prop('tagName'))!==-1)
