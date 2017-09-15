@@ -309,3 +309,26 @@ body {
   left: 0;
   opacity: 0;
 }
+
+/* Wallpaper Rotator */
+#rotator-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: #222222;
+}
+
+#rotator-container div {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#rotator-container div img {
+  object-fit: cover;
+}

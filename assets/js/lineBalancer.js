@@ -256,7 +256,7 @@ console.log(this.data)
         }
         hidespans[id].wordsets.push({'$self': $self, '$words': $words});
         $self.on('mouseover', function(){
-          if(!mrchan.config.tooltips || hidespans[id].state==='on')return;
+          if(!mrchan.config.inform.tooltips || hidespans[id].state==='on')return;
           hidespans[id].state = 'on';
           restructure(id);
           _.each(hidespans[id].wordsets, function(item){
@@ -264,7 +264,7 @@ console.log(this.data)
           });
         });
         $self.on('mouseout', function(){
-          if(!mrchan.config.tooltips || hidespans[id].state==='off')return;
+          if(!mrchan.config.inform.tooltips || hidespans[id].state==='off')return;
           hidespans[id].state = 'off';
           restructure(id);
           _.each(hidespans[id].wordsets, function(item){

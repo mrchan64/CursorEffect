@@ -26,6 +26,7 @@ function DotView() {
     this.offOpacity = options.offOpacity;
     this.lineOpacity = options.lineOpacity;
     this.create_dots();
+    if(mrchan.config.lowspec)this.plane.style('opacity', 0);
   }
 
   this.scale = function() {

@@ -76,7 +76,7 @@ function ContextMenu() {
 
   this.toggleTooltips = function(){
     mrchan.config.tooltips = !mrchan.config.tooltips;
-    document.cookie = mrchan.config.tooltips ? "tooltips=y" : "tooltips=";
+    document.cookie = mrchan.config.tooltips ? "tooltips=" : "tooltips=n";
   }
 
   this.nextItem = function(){

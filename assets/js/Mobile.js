@@ -9,7 +9,7 @@ function Mobile() {
     }
     if(-1 !== (start = cookie.indexOf('tooltips'))){
       var tooltips = cookie.substring(start+('tooltips').length+1,start+('tooltips').length+2);
-      mrchan.config.tooltips = tooltips==='y';
+      mrchan.config.inform.tooltips = tooltips!=='n';
     }
     this.scale();
   }
