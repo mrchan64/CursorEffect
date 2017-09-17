@@ -29,6 +29,7 @@ function InfoLabel() {
   }
 
   this.scaleLabels = function() {
+    var porps = this.porps = this.body.node().getBoundingClientRect();
     var positions = this.positions;
     var viewport = mrchan.storage.InfoPanel.viewport;
     var disp = viewport.style('display');
@@ -39,7 +40,7 @@ function InfoLabel() {
       var img = d3.select(this);
       var id = img.attr('id').replace('-splatter-img', '');
       var info = viewport.select('#'+id+'-info');
-      var lowerbound = info.node().getBoundingClientRect().top-info.node().parentNode.offsetTop+Math.round(parseFloat(info.node().parentNode.style['margin-top'].replace('px','')))+viewport.node().scrollTop;
+      var lowerbound = info.node().getBoundingClientRect().top%(porps.height*1.5);
       positions[id] = {
         unshiftedTop: lowerbound-img.node().getBoundingClientRect().height*mrchan.config.label.percentUncovered,
         shiftedTop: lowerbound-img.node().getBoundingClientRect().height*(1-(1-mrchan.config.label.percentUncovered)/2)

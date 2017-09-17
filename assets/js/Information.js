@@ -26,17 +26,17 @@ function InfoPanel() {
     var minLeft = (this.porps.width-dims.width)/2*.3+dims.width;
     this.viewport
       .style('width', porps.width*(1-this.boxWidth) < minLeft ? porps.width-minLeft+'px' : porps.width*this.boxWidth+'px')
-      .style('height', porps.height*.7+'px')
-      .style('top', porps.height*.15+'px');
+      .style('height', porps.height+'px')
+      .style('top', 0+'px');
     this.viewport.selectAll(".info-container-item")
       .style('width', porps.width*(1-this.boxWidth) < minLeft ? porps.width-minLeft+'px' : porps.width*this.boxWidth+'px')
-      .style('height', porps.height*.7*.94+'px')
-      .style('margin-top', porps.height*.7*.03+'px')
-      .style('margin-bottom', porps.height*.7*.03+'px');
+      .style('height', porps.height*.94+'px')
+      .style('margin-top', porps.height*.03+'px')
+      .style('margin-bottom', porps.height*.03+'px');
     this.viewport.selectAll(".buffer")
       .style('width', porps.width*(1-this.boxWidth) < minLeft ? porps.width-minLeft+'px' : porps.width*this.boxWidth+'px')
-      .style('height', porps.height*.7*.5+'px');
-    this.dispHeight = porps.height*.7*1.5;
+      .style('height', porps.height*.5+'px');
+    this.dispHeight = porps.height*1.5;
     this.scaleElems();
   }
 
@@ -120,14 +120,14 @@ function InfoPanel() {
     mrchan.storage.InfoLabel.reveal(id);
     this.chosenOne = id;
     this.viewport
-      .style('top', this.porps.height*.15+20+'px')
+      .style('top', 20+'px')
       .style('display', 'block')
       .node().scrollTop = this.displace.indexOf(id) * this.dispHeight;
     this.viewport.transition()
       .duration(200)
       .ease(d3.easeCubicInOut)
       .style('opacity', 1)
-      .style('top', this.porps.height*.15+'px');
+      .style('top', 0+'px');
   }
 
   this.hide = function() {
