@@ -1,0 +1,334 @@
+html {
+  min-height: 100%;
+  height:100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  min-height: 100%;
+  height:100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  position: absolute;
+  background-color: #222222;
+  /*background-image: url("https://images5.alphacoders.com/345/345584.jpg");
+  background-size: cover;
+  background-position: center;*/
+  
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Stars */
+#plane {
+  position: absolute;
+}
+
+#follower {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #0000ff;
+}
+
+.dot {
+  width: 2px;
+  height: 2px;
+  background-color: #0000ff;
+  position: absolute;
+  transition-timing-function: ease-in;
+}
+
+.star {
+  r: 1;
+  fill: #dddddd;
+  opacity: 0;
+}
+
+.starhov {
+  pointer-events: visible;
+  r: 30;
+}
+
+.constellation {
+  stroke: #dddddd;
+  opacity: 0;
+}
+
+/* Basic clickable div stuff */
+.basic-label {
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+}
+
+.linkable {
+  cursor: pointer;
+}
+
+/* Name title */
+#name-capsule {
+  z-index: 9;
+  filter: drop-shadow( 2px 2px 2px #000 );
+}
+
+#name-slide-box {
+  font-family: "Century Gothic";
+  position: relative;
+  float: center;
+  color: #fff;
+  opacity: 0;
+  text-align: center;
+}
+
+#name-outline {
+  stroke-width: 4px;
+  stroke: #fff;
+  fill: none;
+}
+
+/* Context Menu */
+#context-menu {
+  height: 0px;
+  width: 0px;
+  overflow: hidden;
+  border: 1px solid #777777;
+  opacity: 0;
+  position: absolute;
+  z-index: 10;
+}
+
+.context-item {
+  font-family: "Arial";
+  overflow: hidden;
+  border-bottom: 1px solid #777777;
+  background-color: rgba(34, 34, 34, .5);
+  color: #777777;
+  white-space: nowrap;
+}
+.context-item:hover{
+  background-color: rgba(20, 20, 20, 1);
+}
+.context-item:click{
+  background-color: rgba(0, 0, 0, 1);
+}
+  
+.width-tester {
+  font-family: "Arial";
+  position: absolute;
+  visibility: hidden;
+  height: auto;
+  width: auto;
+  white-space: nowrap;
+}
+
+/* Selection Menu */
+#directory-container {
+  position: relative;
+  height: 100%;
+  pointer-events: none;
+  z-index: 8;
+  filter: drop-shadow( 2px 2px 2px #000 );
+}
+
+#directory-separator {
+  -webkit-mask-image: linear-gradient(transparent 10%, black 13%, black 87%, transparent 90%);
+  position: absolute;
+  right: -10%;
+  width: 5px;
+}
+
+#directory-separator-line {
+  stroke: #dddddd;
+  stroke-width: 2;
+}
+
+.directory-choice-text {
+  font-family: "Century Gothic";
+  color: #fff;
+  position: absolute;
+  height: auto;
+  width: auto;
+  white-space: nowrap;
+  pointer-events: all;
+}
+
+.directory-selector {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.directory-selector-line {
+  opacity: 1;
+  stroke-width: 1.5;
+  stroke: #fff;
+}
+
+/* Content Containers */
+#info-container {
+  -webkit-mask-image: linear-gradient(transparent 0%, black 3%, black 97%, transparent 100%);
+  position: absolute;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  right: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  display: none;
+  filter: drop-shadow( 2px 2px 2px #000 );
+}
+
+.info-container-item {
+  position: relative;
+  overflow: hidden;
+  float: left;
+}
+
+.info-container-child {
+  color: #fff;
+  text-align: right;
+  position: absolute;
+  top: 5%;
+  width: 85%;
+  height: 90%;
+  pointer-events: all;
+}
+
+.info-container-child h1 {
+  font-family: "Century Gothic";
+  line-height: 150%;
+}
+
+.info-container-child p {
+  font-family: "Arial";
+  line-height: 150%;
+}
+
+.info-container-buffer {
+  width: 100%;
+  height: 3%;
+}
+
+.tooltip {
+  pointer-events: all;
+  cursor: pointer;
+  width: 0px;
+}
+
+[data-words]{
+  vertical-align: top;
+  position: relative;
+  display: inline-block;
+}
+[data-words] > span{
+  /*font-weight: bold;*/
+  pointer-events: none;
+  left: 0;
+  position: absolute;
+  white-space: nowrap;
+  height: auto;
+  width: auto;
+}
+
+#balance-tester {
+  font-family: "Arial";
+  position: absolute;
+  visibility: hidden;
+  height: auto;
+  width: auto;
+  white-space: nowrap;
+}
+
+.balance-div {
+  position: relative;
+  margin-left: auto;
+  margin-right: 0;
+  height: auto;
+  overflow-x: hidden;
+  pointer-events: none;
+}
+
+.balance-div p {
+  position: relative;
+  top: 0;
+  margin: 0 0;
+  white-space: nowrap;
+  width: auto;
+}
+
+.balance-div h1 {
+  position: relative;
+  top: 0;
+  margin: 0 0;
+  white-space: nowrap;
+  width: auto;
+}
+
+.block-div {
+  position: relative;
+  width: 90%;
+  margin-right: 1%;
+  height: auto;
+  pointer-events: none;
+}
+
+/* Content Labels */
+#info-label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 50%;
+  opacity: 0;
+  display: none;
+  overflow: hidden;
+  filter: drop-shadow( 2px 2px 2px #000 );
+}
+
+#info-label-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.info-label-img {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+
+/* Wallpaper Rotator */
+#rotator-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: #222222;
+}
+
+#rotator-container div {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#rotator-container div img {
+  object-fit: cover;
+}
